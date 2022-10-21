@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Create/Solve</title>
+</head>
+
+<style>
+    canvas { border: 1px solid black; }
+
+    p { font-size: 25px; }
+    
+    button:hover { background-color: rgb(190, 190, 190); }
+
+    th.current{ width: 125px; }
+
+    button
+    {
+        border: 1px solid black;
+        background-color: lightgray;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    button:active
+    {
+        background-color: black;
+        color: white;
+        transform: translateY(2px);
+    }
+
+    button.start
+    {
+        position: absolute;
+        top: 25px;
+        left: 140px;
+    }
+
+    button.end
+    {
+        position: absolute;
+        top: 80px;
+        left: 140px;
+    }
+
+    button.wall
+    {
+        position: absolute;
+        top: 135px;
+        left: 140px;
+    }
+
+    button.solve
+    {
+        position: absolute;
+        top: 222px;
+        left: 550px;
+    }
+
+    button.clear
+    {
+        position: absolute;
+        top: 257px;
+        left: 550px;
+    }
+
+    th
+    {
+        border: 1px solid black;
+        font-size: 25px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <p>Start block</p>
+    <button class="start" id="start">place start</button>
+    <p>End block</p>
+    <button class="end" id="end">place end</button>
+    <p>Wall block</p>
+    <button class="wall" id="wall">place wall</button>
+
+    <table>
+        <th>Currently Selected</th>
+        <th class="current" id="current">Wall</th>
+    </table>
+
+    <canvas id="canvas" width="520" height="520"></canvas>
+
+    <button class="solve" id="solve">click here to solve maze</button>
+    <button class="clear" id="clear">click here to clear maze</button>
+
+    
+    
+    <script src="maze.js"></script>
+</body>
+
+</html>
