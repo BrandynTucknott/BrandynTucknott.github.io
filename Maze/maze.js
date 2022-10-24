@@ -527,6 +527,15 @@ function solveMaze()
         if (queue.size == 0) // end condition: nothing to deque
         {
             clearTimeout(interval);
+            context.fillStyle = "rgb(255, 103, 15)"; // orange
+            context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM);
+
+            let numColor = context.fillStyle;
+            context.fillStyle = "rgb(0, 0, 0)";
+            context.fillText(`${x} ${y}`, BOX_DIM * (x) + DIVIDER_HEIGHT * (x + 1), BOX_DIM * (y + 1) + DIVIDER_HEIGHT * y, BOX_DIM);
+            context.fillStyle = numColor;
+            
+            return;
         }
 
 
