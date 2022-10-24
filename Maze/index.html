@@ -8,13 +8,22 @@
 </head>
 
 <style>
-    canvas { border: 1px solid black; }
-
-    p { font-size: 25px; }
-    
     button:hover { background-color: rgb(190, 190, 190); }
 
-    th.current{ width: 125px; }
+    canvas 
+    {
+        border: 1px solid black; 
+        position: fixed;
+        top: 100px; 
+        background-color: white;
+    }
+
+    section 
+    { 
+        font-size: 25px;
+        position: fixed;
+        background-color: white;
+    }
 
     button
     {
@@ -31,70 +40,84 @@
         transform: translateY(2px);
     }
 
-    button.start
+    span.slider_box
     {
-        position: absolute;
-        top: 25px;
-        left: 140px;
-    }
-
-    button.end
-    {
-        position: absolute;
-        top: 80px;
-        left: 140px;
+        font-size: 25px;
+        border: 1px solid black;
     }
 
     button.wall
     {
-        position: absolute;
-        top: 135px;
-        left: 140px;
+        background-color: rgb(0, 160, 0); /*starter color: program defaults user to wall*/
     }
 
-    button.solve
+    section.queue_display
     {
-        position: absolute;
-        top: 222px;
-        left: 550px;
-    }
-
-    button.clear
-    {
-        position: absolute;
-        top: 257px;
-        left: 550px;
-    }
-
-    th
-    {
-        border: 1px solid black;
         font-size: 25px;
-        text-align: center;
+        display: fixed;
+        top: 200px;
+    }
+
+    section.queue
+    {
+        right: 200px;
+    }
+
+    section.popped
+    {
+        right: 100px;
+    }
+
+    ol
+    {
+        list-style-type: none;
     }
 </style>
 
-<body>
-    <p>Start block</p>
-    <button class="start" id="start">place start</button>
-    <p>End block</p>
-    <button class="end" id="end">place end</button>
-    <p>Wall block</p>
-    <button class="wall" id="wall">place wall</button>
+<body style="user-select: none">
+    <section class="buttons" id="buttons">
 
-    <table>
-        <th>Currently Selected</th>
-        <th class="current" id="current">Wall</th>
-    </table>
+        <span><button class="start" id="start">place start</button> 
+            <button class="end" id="end">place end</button> 
+                <button class="wall" id="wall">place wall</button>
+                    <button class="erase" id="erase">erase wall</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="solve" id="solve">Run</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="reset" id="reset">Reset</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="clear" id="clear">Clear</button>
+        </span>
+        <br>
+        <span>Checking Speed <br>
+            <input type="number" class="slider_box" id="slider_box" value="1000" step="5">
+        </span>
+        <input type="range" id="slider" min="15" max="5000" step="5" value="1000">
+        
 
-    <canvas id="canvas" width="520" height="520"></canvas>
+    </section>
 
-    <button class="solve" id="solve">click here to solve maze</button>
-    <button class="clear" id="clear">click here to clear maze</button>
+    <canvas id="canvas" width="638" height="638"></canvas>
 
+    <section class="queue_display">
+        <section class="queue">
+            <!-- header queue -->
+            <span style="border: 1px solid black"> Queue </span>
+            <ol id="queue_table" class="queue_table">
+                <li id="queue_display"></li>
+            </ol>
+        </section>
+        <section class="popped">
+            <!-- header popped -->
+            <span style="border: 1px solid black"> Popped </span>
+            <ol>
+                <li id="popped_display"></li>
+            </ol>
+        </section>
+    </section>
     
+    <script src="testing.js"></script>
     
-    <script src="maze.js"></script>
 </body>
 
 </html>
