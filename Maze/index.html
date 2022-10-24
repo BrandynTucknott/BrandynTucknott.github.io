@@ -55,7 +55,7 @@
     {
         font-size: 25px;
         display: fixed;
-        top: 200px;
+        top: 50px;
     }
 
     section.queue
@@ -71,9 +71,12 @@
     ol
     {
         list-style-type: none;
+        overflow: auto;
+        height: 630px;
     }
 </style>
 
+<!-- UI to create maze -->
 <body style="user-select: none">
     <section class="buttons" id="buttons">
 
@@ -96,9 +99,12 @@
         
 
     </section>
+    <!-- end of maze creating UI -->
 
+    <!-- create the canvas -->
     <canvas id="canvas" width="638" height="638"></canvas>
 
+    <!-- display queue -->
     <section class="queue_display">
         <section class="queue">
             <!-- header queue -->
@@ -115,8 +121,9 @@
             </ol>
         </section>
     </section>
+    <!-- end of queue display -->
     
-    <script src="maze.js"></script>
+    <script src="testing.js"></script>
     
 </body>
 
