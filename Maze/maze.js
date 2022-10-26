@@ -132,58 +132,28 @@ function inRange(num, lower, upper)
     return (num >= lower && num <= upper);
 }
 
+function drawNum(gridX, gridY)
+{
+    let originalColor = context.fillStyle;
+    context.fillStyle = "rgb(0, 0, 0)";
+    context.fillText(`${gridX} ${gridY}`, BOX_DIM * (gridX) + DIVIDER_HEIGHT * (gridX + 1), BOX_DIM * (gridY + 1) + DIVIDER_HEIGHT * gridY, BOX_DIM);
+    context.fillStyle = originalColor;
+}
+
 // fills out maze and draws given square to canvas
 function fillSquare(gridX, gridY)
 {
-    let square = maze[gridX][gridY];
-
-    if (hasStart && type == "start")
-        return;
-    else if (hasEnd && type == "end")
-        return;
-    
-    // figure out what type of square it is replacing and adjust appropriately
-    if (square.type == "start")
-    {
-        hasStart = false; // it is being replaced
-    }
-    else if (square.type == "end")
-    {
-        hasEnd = false; // it is being replaced
-    }
-
-
-    if (type == "wall") // square new type
-    {
-        changeState(square, "wall");
+    // draw the square
+    if (gridX == 0 && gridY == 0)
+        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX, (BOX_DIM + DIVIDER_HEIGHT) * gridY, BOX_DIM + 1, BOX_DIM + 1);
+    else if (gridX == 0)
+        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX, (BOX_DIM + DIVIDER_HEIGHT) * gridY + 1, BOX_DIM + 1, BOX_DIM);
+    else if (gridY == 0)
+        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX + 1, (BOX_DIM + DIVIDER_HEIGHT) * gridY, BOX_DIM, BOX_DIM + 1);
+    else
         context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX + 1, (BOX_DIM + DIVIDER_HEIGHT) * gridY + 1, BOX_DIM, BOX_DIM);
-    }
 
-    else if (type == "path")
-    {
-        changeState(square, "path");
-        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX + 1, (BOX_DIM + DIVIDER_HEIGHT) * gridY + 1, BOX_DIM, BOX_DIM);
-    }
-
-    else if (type == "start" && !hasStart) // there can only be one start square
-    {
-        changeState(square, "start");
-        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX + 1, (BOX_DIM + DIVIDER_HEIGHT) * gridY + 1, BOX_DIM, BOX_DIM);
-        hasStart = true;
-    }
-
-    else if (type == "end" && !hasEnd) // there can only be one start square
-    {
-        changeState(square, "end");
-        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * gridX + 1, (BOX_DIM + DIVIDER_HEIGHT) * gridY + 1, BOX_DIM, BOX_DIM);
-        hasEnd = true;
-    }
-
-
-    let numColor = context.fillStyle;
-    context.fillStyle = "rgb(0, 0, 0)";
-    context.fillText(`${gridX} ${gridY}`, BOX_DIM * (gridX) + DIVIDER_HEIGHT * (gridX + 1), BOX_DIM * (gridY + 1) + DIVIDER_HEIGHT * gridY, BOX_DIM);
-    context.fillStyle = numColor;
+    drawNum(gridX, gridY);
 }
 
 // pushes nieghbors of a square into the queue
@@ -369,6 +339,45 @@ document.addEventListener("mousedown", function(click)
                     }
 
                     // fill the square
+                    let square = maze[gridX][gridY];
+
+                    // do not draw more than one start/end square
+                    if (hasStart && type == "start")
+                        continue;
+                    else if (hasEnd && type == "end")
+                        continue;
+                    
+                    // figure out what type of square it is replacing and adjust appropriately
+                    if (square.type == "start") { hasStart = false; } // it is being replaced
+                    else if (square.type == "end") { hasEnd = false; } // it is being replaced
+
+                    // change square type
+                    if (type == "wall")
+                    {
+                        changeState(square, "wall");
+                        context.fillStyle = "rgb(0, 0, 0)";
+                    }
+
+                    else if (type == "path") 
+                    { 
+                        changeState(square, "path"); 
+                        context.fillStyle = "rgb(255, 255, 255)";
+                    }
+
+                    else if (type == "start")
+                    {
+                        changeState(square, "start");
+                        context.fillStyle = start_color;
+                        hasStart = true;
+                    }
+
+                    else if (type == "end") // there can only be one start square
+                    {
+                        changeState(square, "end");
+                        context.fillStyle = end_color;
+                        hasEnd = true;
+                    }
+
                     fillSquare(gridX, gridY);
                 }
             }   
@@ -404,6 +413,8 @@ let mazeCopy; // will be used to save maze state
 let isComplete = false;
 const MAX_SPEED = parseInt(slider.max);
 const MIN_SPEED = parseInt(slider.min);
+const start_color = "rgb(99, 102, 106)";
+const end_color = "rgb(152, 29, 151)";
 
 slider.addEventListener("input", function()
 {
@@ -459,19 +470,19 @@ function resetMaze()
             if (square.type == "wall")
             {
                 context.fillStyle = "rgb(0, 0, 0)";
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * i + 1, (BOX_DIM + DIVIDER_HEIGHT) * j + 1, BOX_DIM, BOX_DIM);
+                fillSquare(i, j);
             }
 
             else if (square.type == "start") // there can only be one start square
             {
                 context.fillStyle = "rgb(99, 102, 106)";
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * i + 1, (BOX_DIM + DIVIDER_HEIGHT) * j + 1, BOX_DIM, BOX_DIM);
+                fillSquare(i, j);
             }
 
             else if (square.type == "end") // there can only be one start square
             {
                 context.fillStyle = "rgb(152, 29, 151)";
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * i + 1, (BOX_DIM + DIVIDER_HEIGHT) * j + 1, BOX_DIM, BOX_DIM);
+                fillSquare(i, j);
             }
         }
     }
@@ -528,12 +539,9 @@ function solveMaze()
         {
             clearTimeout(interval);
             context.fillStyle = "rgb(255, 103, 15)"; // orange
-            context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM);
+            fillSquare(x, y);
 
-            let numColor = context.fillStyle;
-            context.fillStyle = "rgb(0, 0, 0)";
-            context.fillText(`${x} ${y}`, BOX_DIM * (x) + DIVIDER_HEIGHT * (x + 1), BOX_DIM * (y + 1) + DIVIDER_HEIGHT * y, BOX_DIM);
-            context.fillStyle = numColor;
+            drawNum(x, y);
             
             return;
         }
@@ -548,43 +556,27 @@ function solveMaze()
         tableRow = document.createElement("li");
         tableRow.innerHTML = `${square.x} ${square.y}`;
         popped_display.appendChild(tableRow);
-        const start_color = "rgb(99, 102, 106)";
-        const end_color = "rgb(152, 29, 151)";
 
-        // edge cases 
-        if (square.type == "start") // change color differently
+        // change color and check for end square
+        context.fillStyle = "rgb(230, 230, 0)"; // yellow
+        if (square.type != "start")
         {
-            context.fillStyle = "rgb(230, 230, 0)"; // yellow
-        } // no previous square if the current square is start square
-        else if (square.type == "end") // change color differently
-        {
-            isComplete = true;
-            context.fillStyle = "rgb(230, 230, 0)"; // yellow
             prevX = x;
             prevY = y;
 
             x = square.x;
-            y = square.y; // get coords
+            y = square.y;
 
-            clearTimeout(interval);
-        }
-        else // fill yellow to show it is being considered: normal case
-        {
-            context.fillStyle = "rgb(230, 230, 0)"; // yellow
-            prevX = x;
-            prevY = y;
-
-            x = square.x;
-            y = square.y; // get coords
+            if (square.type == "end")
+            {
+                isComplete = true;
+                clearTimeout(interval);
+            }
         }
         // squares are marked as visited when added to prevent adding same square multiple times
-        
-        context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM);
-
-        let numColor = context.fillStyle;
-        context.fillStyle = "rgb(0, 0, 0)";
-        context.fillText(`${x} ${y}`, BOX_DIM * (x) + DIVIDER_HEIGHT * (x + 1), BOX_DIM * (y + 1) + DIVIDER_HEIGHT * y, BOX_DIM);
-        context.fillStyle = numColor;
+        fillSquare(x, y);
+        // context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM);
+        // drawNum(x, y);
 
         // change previous square color from yellow to orange
         if (square.type != "start") // start has no previous square to color in
@@ -592,22 +584,13 @@ function solveMaze()
             if (maze[prevX][prevY].type == "start") // previous square is start, fill it in with a different color
             {
                 context.fillStyle = start_color;
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * prevX + 1, (BOX_DIM + DIVIDER_HEIGHT) * prevY + 1, BOX_DIM, BOX_DIM);
-
-                numColor = context.fillStyle;
-                context.fillStyle = "rgb(0, 0, 0)";
-                context.fillText(`${prevX} ${prevY}`, BOX_DIM * (prevX) + DIVIDER_HEIGHT * (prevX + 1), BOX_DIM * (prevY + 1) + DIVIDER_HEIGHT * prevY, BOX_DIM);
-                context.fillStyle = numColor;
+                fillSquare(prevX, prevY);
             }
 
             else // previous square was a normal square
             {
                 context.fillStyle = "rgb(255, 103, 15)"; // orange
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * prevX + 1, (BOX_DIM + DIVIDER_HEIGHT) * prevY + 1, BOX_DIM, BOX_DIM);
-                numColor = context.fillStyle;
-                context.fillStyle = "rgb(0, 0, 0)";
-                context.fillText(`${prevX} ${prevY}`, BOX_DIM * (prevX) + DIVIDER_HEIGHT * (prevX + 1), BOX_DIM * (prevY + 1) + DIVIDER_HEIGHT * prevY, BOX_DIM);
-                context.fillStyle = numColor;
+                fillSquare(prevX, prevY);
             }
         }
         // add neighbors to queue
@@ -621,11 +604,8 @@ function solveMaze()
             // delay recoloring end to make it flow better
             setTimeout(function()
             {
-                context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM); // fill in end appropriate color
+                fillSquare(x, y);
 
-                
-                context.fillStyle = "rgb(0, 0, 0)";
-                context.fillText(`${x} ${y}`, BOX_DIM * (x) + DIVIDER_HEIGHT * (x + 1), BOX_DIM * (y + 1) + DIVIDER_HEIGHT * y, BOX_DIM);
                 context.fillStyle = "rgb(0, 204, 104)"; // green
                 
                 let square = maze[x][y]; // go back and color path green
@@ -633,12 +613,7 @@ function solveMaze()
                 {
                     x = square.prevSquare.x;
                     y = square.prevSquare.y;
-                    context.fillRect((BOX_DIM + DIVIDER_HEIGHT) * x + 1, (BOX_DIM + DIVIDER_HEIGHT) * y + 1, BOX_DIM, BOX_DIM);
-
-                    numColor = context.fillStyle;
-                    context.fillStyle = "rgb(0, 0, 0)";
-                    context.fillText(`${x} ${y}`, BOX_DIM * (x) + DIVIDER_HEIGHT * (x + 1), BOX_DIM * (y + 1) + DIVIDER_HEIGHT * y, BOX_DIM);
-                    context.fillStyle = numColor;
+                    fillSquare(x, y);
                     square = maze[x][y];
                 }
                 isSolving = false;
