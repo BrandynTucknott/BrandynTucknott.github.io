@@ -74,6 +74,34 @@
         overflow: auto;
         height: 630px;
     }
+
+    .colorKeyBox
+    {
+        border: 1px solid black;
+        position: fixed;
+        top: 100px;
+        left: 700px;
+        font-size: 25px;
+        width: 300px;
+        height: 230px;
+        text-align: center;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+    }
+
+    .startKey, .endKey, .wallKey, .visitedKey, .queuedKey, .currentKey
+    {
+        border: 1px solid black;
+        width: 15px;
+        height: 15px;
+    }
+    .startKey { background-color: rgb(99, 102, 106); }
+    .endKey { background-color: rgb(152, 29, 151); }
+    .wallKey { background-color: rgb(0, 0, 0); }
+    .visitedKey { background-color: rgb(255, 103, 15); }
+    .queuedKey { background-color: rgb(0, 100, 190); }
+    .currentKey { background-color: rgb(230, 230, 0); }
 </style>
 
 <!-- UI to create maze -->
@@ -121,10 +149,41 @@
             </ol>
         </section>
     </section>
+
+    <section class="colorKeyBox">
+        <span><strong>Color Key</strong></span>
+        <table class="colorTable">
+            <tr>
+                <td><div class="startKey"></div></td>
+                <td>start square</td>
+            </tr>
+            <tr>
+                <td><div class="endKey"></div></td>
+                <td>end square</td>
+            </tr>
+            <tr>
+                <td><div class="wallKey"></div></td>
+                <td>wall</td>
+            </tr>
+            <tr>
+                <td><div class="visitedKey"></div></td>
+                <td>visited square</td>
+            </tr>
+            <tr>
+                <td><div class="queuedKey"></div></td>
+                <td>queued square</td>
+            </tr>
+            <tr>
+                <td><div class="currentKey"></div></td>
+                <td>popped/processing square</td>
+            </tr>
+        </table>
+    </section>
     <!-- end of queue display -->
     
     <script src="mazeClasses.js"></script>
     <script src="mazeFunctions.js"></script>
+    <script src="eventListeners.js"></script>
     <script src="maze.js"></script>
     
 </body>

@@ -71,6 +71,8 @@ function pushNeighbors(queue, gridX, gridY)
             let row = document.createElement("li");
             row.innerHTML = `${gridX} ${gridY - 1}`;
             queue_display.appendChild(row);
+            context.fillStyle = queue_color;
+            fillSquare(gridX, gridY - 1);
         }
     }
 
@@ -84,6 +86,8 @@ function pushNeighbors(queue, gridX, gridY)
             let row = document.createElement("li");
             row.innerHTML = `${gridX + 1} ${gridY}`;
             queue_display.appendChild(row);
+            context.fillStyle = queue_color;
+            fillSquare(gridX + 1, gridY);
         }
     }
 
@@ -97,6 +101,8 @@ function pushNeighbors(queue, gridX, gridY)
             let row = document.createElement("li");
             row.innerHTML = `${gridX} ${gridY + 1}`;
             queue_display.appendChild(row);
+            context.fillStyle = queue_color;
+            fillSquare(gridX, gridY + 1);
         }
     }
 
@@ -110,6 +116,8 @@ function pushNeighbors(queue, gridX, gridY)
             let row = document.createElement("li");
             row.innerHTML = `${gridX - 1} ${gridY}`;
             queue_display.appendChild(row);
+            context.fillStyle = queue_color;
+            fillSquare(gridX - 1, gridY);
         }
     }
 }
@@ -126,8 +134,9 @@ function resetMaze()
 {
     if (mazeCopy == null)
         return;
+    let temp = mazeCopy;
     clearMaze();
-    maze = structuredClone(mazeCopy);   
+    maze = temp;
     hasStart = true;
     hasEnd = true;
     isSolving = false;
@@ -164,9 +173,9 @@ function resetMaze()
 
 function solveMaze()
 {
+    resetMaze();
     if (isSolving || isComplete)
     {
-        resetMaze();
         solveMaze();
         return;
     }
@@ -303,6 +312,7 @@ function clearMaze()
 {
     // reset canvas
     clearTimeout(interval);
+    mazeCopy = null;
     context.clearRect(0, 0, width, height);
     initMaze();
     hasStart = false;
