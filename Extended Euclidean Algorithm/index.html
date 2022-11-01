@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .header
+    {
+        display: flex;
+        flex-flow: row;
+        height: 40px;
+    }
+
+    .table
+    {
+        position: relative;
+        top: 50px;
+        display: flex;
+        flex-flow: column;
+        font-size: 20px;  
+    }
+
+    .a, .b, .q, .r, .s1, .s2, .s3, .t1, .t2, .t3
+    {
+        border: 1px solid black;
+        width: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<body id = "body">
+    <h1>Extended Euclidean Algorithm</h1>
+    <span>a = <input type="number" class = "numA" id="numA" value="0"></span>
+    <span>b = <input type="number" class = "numB" id = "numB" value="1"></span>
+    <button class="solve" id="solve">solve</button>
+    <section class = "table" id = "table">
+        <div class = "header" id = "header">
+            <span class = "a" id = "a">a</span>
+            <span class = "b" id = "b">b</span>
+            <span class = "q" id = "q">q</span>
+            <span class = "r" id = "r">r</span>
+            <span class = "s1" id = "s1">s1</span>
+            <span class = "s2" id = "s2">s2</span>
+            <span class = "s3" id = "s3">s3</span>
+            <span class = "t1" id = "t1">t1</span>
+            <span class = "t2" id = "t2">t2</span>
+            <span class = "t3" id = "t3">t3</span>
+        </div>
+    </section>
+    
+    <script src="functions.js"></script>
+    <script src="eventListeners.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
