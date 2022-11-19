@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Create/Solve</title>
+</head>
+
+<style>
+    button:hover
+    { background-color: rgb(190, 190, 190); }
+
+    canvas 
+    {
+        border: 1px solid black; 
+        position: fixed;
+        left: 0;
+        top: 100px; 
+        background-color: white;
+        z-index: -1;
+    }
+
+    section 
+    { 
+        font-size: 25px;
+        position: fixed;
+        background-color: white;
+    }
+
+    button
+    {
+        border: 1px solid black;
+        background-color: lightgray;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .drop_button
+    {
+        height: 30px;
+        width: 200px;
+    }
+
+    .bfs, .dfs, .drunkards_walk
+    {
+        height: 30px;
+        width: 200px;
+    }
+
+    .slider_box
+    {
+        font-size: 20px;
+        border: 1px solid black;
+    }
+
+    .wall { background-color: rgb(0, 160, 0); /*starter color: program defaults user to wall*/ }
+
+    .dropdown
+    {
+        position: fixed;
+        right: 200px;
+    }
+
+    .dropdown_content { display: none; z-index: 1;}
+</style>
+
+<!-- UI to create maze -->
+<body style="user-select: none">
+    <section class="buttons" id="buttons">
+
+        <span>
+            <button class="start" id="start">place start</button> 
+            <button class="end" id="end">place end</button> 
+            <button class="wall" id="wall">place wall</button>
+            <button class="erase" id="erase">erase wall</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="solve" id="solve">Run</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="reset" id="reset">Reset</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="clear" id="clear">Clear</button> 
+        </span>
+        <br>
+        <span>Checking Speed <br>
+            <input type="number" class="slider_box" id="slider_box" value="1000" step="5" style="width: 100px">
+        </span>
+        <input type="range" id="slider" min="15" max="5000" step="5" value="1000">
+        
+
+    </section>
+
+    <!-- algroithm selection -->
+    <div class="dropdown">
+        <button class="drop_button" id="drop_button">BFS</button>
+
+        <!-- algorithm list -->
+        <div class="dropdown_content" id="dropdown_content">
+            <button class="bfs" id="bfs">BFS</button>
+            <button class="dfs" id="dfs">DFS</button>
+            <button class="drunkards_walk" id="drunkards_walk">Drunkard's Walk</button>
+            <button class="cancel" id="cancel">Cancel</button>
+        </div>
+
+    </div>   
+    <!-- end of maze creating UI -->
+
+    <!-- create the canvas -->
+    <canvas id="canvas" width="1" height="1"></canvas>
+    
+    <script src="classes.js"></script>
+
+    <script src="Algorithms\bfs.js"></script>
+    <script src="Algorithms\dfs.js"></script>
+    <script src="Algorithms\drunkWalk.js"></script>
+
+    <script src="functions.js"></script>
+    <script src="main.js"></script>
+    <script src="eventListeners.js"></script>
+    
+</body>
+
+</html>
