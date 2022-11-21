@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+
+<style>
+    button:hover
+    {
+        background-color: rgb(150, 150, 150);
+    }
+    button
+    {  
+        font-size: 15px;
+        background-color: rgb(190, 190, 190);
+        width: 160px;
+        height: 25px;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <div style="display: flex; flex-flow: column">
+        <p style="font-size: 30px"><strong>To-Do List</strong></p>
+        <p style="font-size: 15px">Developed by Brandyn Tucknott</p>
+        <p style="font-size: 18px">Elements with a lower priority number have a higher priority. Input priority without operators (i.e. put in '4' not '2 + 2').</p>
+
+        <div style="display: flex; flex-flow: row; justify-content: space-around;">
+            <div style="display: flex; flex-flow: column">
+                <span style="font-size: 18px">Task (any input): <input type="text" id="task" class="task" value=""></span>
+                <span style="font-size: 18px">Priority (integer): <input type="number" id="priority" class="priority" value="0"></span>
+                <button id="add" class="add">Add Task</button>
+                <p style="font-size: 18px" id="add_error_message"></p>
+            </div>
+
+            <button id="remove" class="remove">Remove First Task</button>
+
+            <div style="display: flex; flex-flow: column">
+                <span style="font-size: 18px">File name: <input type="text" id="file_name" class="file_name" value=""></span>
+                <button id="download" class="download">Download List</button>
+            </div>
+
+            <div style="display: flex; flex-flow: column">
+                <span style="font-size: 18px">Upload File: <input id="upload" type="file"></span>
+                <button id="upload_button" class="upload_button">Upload Json File</button>
+            </div>
+        </div>
+        
+        <p style="font-size: 22px"><br><strong>To-Do List:</strong></p>
+        <ol class="todo_list" id="todo_list">Empty</ol>
+    </div>
+
+    <script src="declarations.js"></script>
+    <script src="classes.js"></script>
+    <script src="functions.js"></script>
+    <script src="eventListeners.js"></script>
+</body>
+</html>
