@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+</head>
+
+<style>
+    .game-interface
+    {
+        display: flex;
+        flex-flow: row;
+    }
+
+    .instructions_and_controls
+    {
+        flex-flow: column;
+    }
+</style>
+<body>
+    <div class="game-interface">
+        <canvas id="canvas" width="1" height="1"></canvas>
+        <br>
+        <section class="instructions_and_controls">
+            <button id="restart">Restart</button>
+            <br>
+            <span>Left click to check a square</span>
+            <br>
+            <span>Right click to flag a square</span>
+            <br>
+            <span>Left click a flag to remove it</span>
+        </section>
+    </div>
+
+    <script src="declarations.js"></script>
+    <script src="classes.js"></script>
+    <script src="functions.js"></script>
+    <script src="eventListeners.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
