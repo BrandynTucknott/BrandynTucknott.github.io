@@ -73,6 +73,7 @@ restart.addEventListener('click', function()
     generateMines();
     assignNumbers();
     gameInProgress = true;
+    placedFlags = 0;
 });
 
 range_box.addEventListener('change', () => 
