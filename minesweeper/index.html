@@ -37,8 +37,22 @@
     {
         margin-top: 40%;
     }
+
+    .system-output
+    {
+        margin-top: 50%;
+    }
+
+    .message-box
+    {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 200px;
+        height: 50px;
+        background-color: white;
+    }
 </style>
-<body>
+<body style="background-color: rgb(230, 230, 230)">
     <div class="game-interface">
         <canvas id="canvas" width="1" height="1"></canvas>
         <br>
@@ -56,13 +70,21 @@
                 <span>Number of Mines</span>
                 <br>
                 <input type="text" class="range-box" id="range-box" value="150">
-                <input type="range" class="slider" id="slider" step="1" value="150" max="250" min="1">
+                <input type="range" class="slider" id="slider" step="1" value="150" max="250" min="1" style="background-color: white">
             </section>
 
             <section class="defuse-tracker">
                 <span>Flags Placed</span>
                 <br>
                 <span id="flag-count">0 / 150</span>
+            </section>
+
+            <section class="system-output">
+                <span>Messages</span>
+                <br>
+                <section class="message-box" id="message-box">
+
+                </section>
             </section>
         </section>
     </div>

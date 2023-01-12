@@ -4,6 +4,7 @@ const restart = document.getElementById('restart');
 const range_box = document.getElementById('range-box');
 const slider = document.getElementById('slider');
 const flag_count = document.getElementById('flag-count');
+const message_box = document.getElementById('message-box');
 
 
 const background_color = "rgb(210, 210, 210)";

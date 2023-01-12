@@ -293,17 +293,24 @@ function checkForWin()
     return true;
 }
 
+// restarts the game
+function restartGame()
+{
+    initializeBoard();
+    generateMines();
+    assignNumbers();
+    gameInProgress = true;
+    message_box.innerHTML = '';
+    flag_count.innerHTML = `0 / ${numMines}`;
+    placedFlags = 0;
+}
+
 function updateNumMines(newNumMines)
 {
     prevNumMines = numMines;
     numMines = newNumMines;
     slider.value = numMines;
     range_box.value = numMines;
-    flag_count.innerHTML = `0 / ${numMines}`;
-    placedFlags = 0;
 
-    initializeBoard();
-    generateMines();
-    assignNumbers();
-    gameInProgress = true;
+    restartGame();
 }

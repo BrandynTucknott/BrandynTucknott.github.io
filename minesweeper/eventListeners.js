@@ -26,7 +26,7 @@ canvas.addEventListener("mousedown", (e) =>
 
         if (board[r][c].isMined) // lost game
         {
-            console.log('mine triggered: game lost');
+            message_box.innerHTML = 'mine triggered: game lost';
             drawClickedSquare(r * square_size, c * square_size);
             let x_offset = Math.floor(.4 * square_size); // .4
             let y_offset = Math.floor(.64 * square_size); // .65
@@ -41,7 +41,7 @@ canvas.addEventListener("mousedown", (e) =>
         board[r][c].isRevealed = true;
         if (checkForWin())
         {
-            console.log('all tiles revealed and all mines defused: player wins');
+            message_box.innerHTML = 'all tiles revealed and all mines defused: player wins';
             gameInProgress = false;
         }
     }
@@ -50,7 +50,7 @@ canvas.addEventListener("mousedown", (e) =>
     {
         if (placedFlags >= numMines)
         {
-            console.log('you cannot place more flags than there are mines');
+            message_box.innerHTML = 'you cannot place more flags than there are mines';
             return;
         }
         drawFlag(clicked_square.y, clicked_square.x);
@@ -59,7 +59,7 @@ canvas.addEventListener("mousedown", (e) =>
         flag_count.innerHTML = `${placedFlags} / ${numMines}`;
         if (checkForWin())
         {
-            console.log('all tiles revealed and all mines defused: player wins');
+            message_box.innerHTML = 'all tiles revealed and all mines defused: player wins';
             gameInProgress = false;
         }
     }
@@ -68,13 +68,7 @@ canvas.addEventListener("mousedown", (e) =>
 // restarts the game if the player chooses to do so
 restart.addEventListener('click', function()
 {
-    // clear all info functino goes here
-    initializeBoard();
-    generateMines();
-    assignNumbers();
-    gameInProgress = true;
-    placedFlags = 0;
-    flag_count.innerHTML = `${placedFlags} / ${numMines}`;
+    restartGame();
 });
 
 range_box.addEventListener('change', () => 
