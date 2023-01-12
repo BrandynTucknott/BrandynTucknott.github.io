@@ -1,3 +1,5 @@
+// const { range } = require("express/lib/request");
+
 function initializeBoard()
 {
     canvas.width = width;
@@ -286,4 +288,17 @@ function checkForWin()
         }
     }
     return true;
+}
+
+function updateNumMines(newNumMines)
+{
+    prevNumMines = numMines;
+    numMines = newNumMines;
+    slider.value = numMines;
+    range_box.value = numMines;
+
+    initializeBoard();
+    generateMines();
+    assignNumbers();
+    gameInProgress = true;
 }

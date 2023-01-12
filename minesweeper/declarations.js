@@ -1,6 +1,9 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const restart = document.getElementById('restart');
+const range_box = document.getElementById('range-box');
+const slider = document.getElementById('slider');
+
 
 const background_color = "rgb(210, 210, 210)";
 const top_square_color = "white";
@@ -29,6 +32,7 @@ const height = 720;
 const board_size = 30;
 const square_size = width / board_size;
 
+let prevNumMines = 150;
 let numMines = 150;
 let placedFlags = 0;
 

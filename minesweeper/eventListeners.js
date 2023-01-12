@@ -71,3 +71,20 @@ restart.addEventListener('click', function()
     assignNumbers();
     gameInProgress = true;
 });
+
+range_box.addEventListener('change', () => 
+{
+    let num = parseInt(range_box.value);
+    if (isNaN(num))
+    {
+        updateNumMines(numMines);
+        return;
+    }
+    updateNumMines(num);
+});
+
+slider.addEventListener('input', () => 
+{
+    let num = parseInt(slider.value);
+    updateNumMines(num);
+});
