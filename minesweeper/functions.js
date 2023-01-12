@@ -127,6 +127,9 @@ function shouldBePushed(square)
     if (square.isMined)
         return false;
 
+    if (square.isFlagged)
+        return false;
+
     return true;
 }
 
@@ -296,6 +299,8 @@ function updateNumMines(newNumMines)
     numMines = newNumMines;
     slider.value = numMines;
     range_box.value = numMines;
+    flag_count.innerHTML = `0 / ${numMines}`;
+    placedFlags = 0;
 
     initializeBoard();
     generateMines();

@@ -19,6 +19,8 @@ canvas.addEventListener("mousedown", (e) =>
         {
             drawHiddenSquare(clicked_square.y, clicked_square.x);
             board[r][c].isFlagged = false;
+            placedFlags--;
+            flag_count.innerHTML = `${placedFlags} / ${numMines}`;
             return; // exit this execution of the listener
         }
 
@@ -54,6 +56,7 @@ canvas.addEventListener("mousedown", (e) =>
         drawFlag(clicked_square.y, clicked_square.x);
         board[r][c].isFlagged = true;
         placedFlags++;
+        flag_count.innerHTML = `${placedFlags} / ${numMines}`;
         if (checkForWin())
         {
             console.log('all tiles revealed and all mines defused: player wins');

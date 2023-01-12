@@ -22,7 +22,7 @@
 
     .difficulty-adjustments
     {
-        margin-top: 50px;
+        margin-top: 30%;
     }
 
     .range-box
@@ -31,6 +31,11 @@
         width: 40px;
         height: 10px;
         font-size: 3;
+    }
+
+    .defuse-tracker
+    {
+        margin-top: 40%;
     }
 </style>
 <body>
@@ -52,6 +57,12 @@
                 <br>
                 <input type="text" class="range-box" id="range-box" value="150">
                 <input type="range" class="slider" id="slider" step="1" value="150" max="250" min="1">
+            </section>
+
+            <section class="defuse-tracker">
+                <span>Flags Placed</span>
+                <br>
+                <span id="flag-count">0 / 150</span>
             </section>
         </section>
     </div>
