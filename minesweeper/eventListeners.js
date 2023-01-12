@@ -74,7 +74,7 @@ restart.addEventListener('click', function()
 range_box.addEventListener('change', () => 
 {
     let num = parseInt(range_box.value);
-    if (isNaN(num))
+    if (isNaN(num) && !(num >= min && num <= max))
     {
         updateNumMines(numMines);
         return;
