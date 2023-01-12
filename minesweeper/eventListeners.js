@@ -74,6 +74,7 @@ restart.addEventListener('click', function()
     assignNumbers();
     gameInProgress = true;
     placedFlags = 0;
+    flag_count.innerHTML = `${placedFlags} / ${numMines}`;
 });
 
 range_box.addEventListener('change', () => 
