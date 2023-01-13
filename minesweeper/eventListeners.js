@@ -34,6 +34,7 @@ canvas.addEventListener("mousedown", (e) =>
             context.fillStyle = 'black';
             context.fillText(`M`, board[r][c].x + x_offset, board[r][c].y + y_offset, square_size);
             gameInProgress = false;
+            endTimer();
             return;
         }
         // else it is not flagged: reveal it
@@ -43,6 +44,7 @@ canvas.addEventListener("mousedown", (e) =>
         {
             message_box.innerHTML = 'all tiles revealed and all mines defused: player wins';
             gameInProgress = false;
+            endTimer();
         }
     }
     // right click: only place a flag if it is an unrevealed square
@@ -61,6 +63,7 @@ canvas.addEventListener("mousedown", (e) =>
         {
             message_box.innerHTML = 'all tiles revealed and all mines defused: player wins';
             gameInProgress = false;
+            endTimer();
         }
     }
 });

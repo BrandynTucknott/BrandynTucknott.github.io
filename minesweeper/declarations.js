@@ -5,6 +5,7 @@ const range_box = document.getElementById('range-box');
 const slider = document.getElementById('slider');
 const flag_count = document.getElementById('flag-count');
 const message_box = document.getElementById('message-box');
+const clock = document.getElementById('clock');
 
 
 const background_color = "rgb(210, 210, 210)";
@@ -39,3 +40,9 @@ let numMines = 150;
 let placedFlags = 0;
 
 let gameInProgress = true;
+
+const dt = 1000; // milliseconds
+let minutes = 0;
+let tens_seconds = 0;
+let ones_seconds = 0;
+let timer = 0;

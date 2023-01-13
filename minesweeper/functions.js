@@ -303,6 +303,8 @@ function restartGame()
     message_box.innerHTML = '';
     flag_count.innerHTML = `0 / ${numMines}`;
     placedFlags = 0;
+    endTimer();
+    startTimer();
 }
 
 function updateNumMines(newNumMines)
@@ -313,4 +315,41 @@ function updateNumMines(newNumMines)
     range_box.value = numMines;
 
     restartGame();
+}
+
+function updateTimer()
+{
+    if (ones_seconds == 10)
+    {
+        ones_seconds = 0;
+        tens_seconds++;
+    }
+
+    if (tens_seconds == 6)
+    {
+        tens_seconds = 0;
+        minutes++;
+    }
+
+    clock.innerHTML = `${minutes} : ${tens_seconds}${ones_seconds}`;
+}
+
+function startTimer()
+{
+    minutes = 0;
+    ones_seconds = 0;
+    tens_seconds = 0;
+
+    timer = setInterval(() =>
+    {
+        ones_seconds++;
+        updateTimer();
+    }, dt);
+
+    updateTimer();
+}
+
+function endTimer()
+{
+    clearInterval(timer);
 }

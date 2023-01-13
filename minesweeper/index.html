@@ -43,13 +43,25 @@
         margin-top: 50%;
     }
 
-    .message-box
+    .message-box, .clock-box
     {
         border: 1px solid black;
         border-radius: 10px;
         width: 200px;
-        height: 50px;
+        height: 40px;
         background-color: white;
+    }
+
+    .timer-section
+    {
+        margin-top: 30%;
+    }
+
+    .clock
+    {
+        font-size: xx-large;
+        display: flex;
+        justify-content: center;
     }
 </style>
 <body style="background-color: rgb(230, 230, 230)">
@@ -82,8 +94,14 @@
             <section class="system-output">
                 <span>Messages</span>
                 <br>
-                <section class="message-box" id="message-box">
+                <section class="message-box" id="message-box"></section>
+            </section>
 
+            <section class="timer-section">
+                <span>Timer</span>
+                <br>
+                <section class="clock-box">
+                    <span id="clock" class="clock">0 : 00</span>
                 </section>
             </section>
         </section>
