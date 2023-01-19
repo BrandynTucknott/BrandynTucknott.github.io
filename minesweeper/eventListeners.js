@@ -1,5 +1,9 @@
 // hides the context menu
-document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("contextmenu", (e) => 
+{
+    // force right click
+    e.preventDefault();
+});
 
 // reveals/flags squares the player chooses
 canvas.addEventListener("mousedown", (e) => 
@@ -14,6 +18,11 @@ canvas.addEventListener("mousedown", (e) =>
     // left click
     if (e.button == 0 && gameInProgress)
     {
+        if (!gameHasStarted)
+        {
+            gameHasStarted = true;
+            startTimer();
+        }
         // left click a flag: remove the flag
         if (board[r][c].isFlagged)
         {

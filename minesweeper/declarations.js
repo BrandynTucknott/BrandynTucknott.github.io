@@ -39,10 +39,11 @@ let prevNumMines = 150;
 let numMines = 150;
 let placedFlags = 0;
 
-let gameInProgress = true;
+let gameInProgress = true; // tracks if board can be modified
 
 const dt = 1000; // milliseconds
 let minutes = 0;
 let tens_seconds = 0;
 let ones_seconds = 0;
 let timer = 0;
+let gameHasStarted = false; // tracks when the timer should start

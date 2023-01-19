@@ -304,7 +304,11 @@ function restartGame()
     flag_count.innerHTML = `0 / ${numMines}`;
     placedFlags = 0;
     endTimer();
-    startTimer();
+    gameHasStarted = false;
+    minutes = 0;
+    ones_seconds = 0;
+    tens_seconds = 0;
+    clock.innerHTML = '0 : 00';
 }
 
 function updateNumMines(newNumMines)
@@ -336,10 +340,6 @@ function updateTimer()
 
 function startTimer()
 {
-    minutes = 0;
-    ones_seconds = 0;
-    tens_seconds = 0;
-
     timer = setInterval(() =>
     {
         ones_seconds++;
