@@ -3,6 +3,8 @@ document.addEventListener("contextmenu", (e) =>
 {
     // force right click
     e.preventDefault();
+
+    document.dispatchEvent('mousedown');
 });
 
 // reveals/flags squares the player chooses
