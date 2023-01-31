@@ -4,7 +4,31 @@ document.addEventListener("contextmenu", (e) =>
     // force right click
     e.preventDefault();
 
-    document.dispatchEvent('mousedown');
+    const clickedX = e.offsetX; // get relative coords in canvas
+    const clickedY = e.offsetY;
+
+    let clicked_square = getSquare(clickedY, clickedX); // get square which corresponds to those coords
+    let r = clicked_square.y / square_size; // get the position in the board array in which the square sits
+    let c = clicked_square.x / square_size;
+
+    if (gameInProgress && (!board[r][c].isRevealed && !board[r][c].isFlagged))
+    {
+        if (placedFlags >= numMines)
+        {
+            message_box.innerHTML = 'you cannot place more flags than there are mines';
+            return;
+        }
+        drawFlag(clicked_square.y, clicked_square.x);
+        board[r][c].isFlagged = true;
+        placedFlags++;
+        flag_count.innerHTML = `${placedFlags} / ${numMines}`;
+        if (checkForWin())
+        {
+            message_box.innerHTML = 'all tiles revealed and all mines defused: player wins';
+            gameInProgress = false;
+            endTimer();
+        }
+    }
 });
 
 // reveals/flags squares the player chooses
