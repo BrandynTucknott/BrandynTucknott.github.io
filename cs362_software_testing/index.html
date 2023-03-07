@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 362 Software Testing Assignment</title>
+</head>
+
+<body>
+    <script>
+        let x; // integer
+        let z; // boolean
+
+        /*
+        Should result in 75% statement coverage and 50% branch coverage with the following cases:
+        * X = 5, Z = true
+        * X = 0, Z = true
+        * X = -1, Z = false
+        */
+        function question2_1(inputX, inputZ)
+        {
+            x = inputX;
+            z = inputZ;
+
+            if (x >= 0)
+            {
+                console.log(x);
+                return;
+            }
+
+            else if (x < 0 && z == false)
+            {
+                console.log(-x);
+                return;
+            }
+
+            else if (x < 0)
+            {
+                if (z)
+                {
+                    console.log(x);
+                    return;
+                }
+
+                else // z == false
+                {
+                    // never get here
+                }
+            }
+            
+        }
+    </script>
+    
+</body>
+</html>

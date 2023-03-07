@@ -1,6 +1,6 @@
 function appendToPage(a, b, q, r, s1, s2, s3, t1, t2, t3)
 {
-    const arr = [a, b, q, r, s1, s2, s3, t1, t2, t3];
+    const arr = [a, b, q, r, s1, s2, s3, t1, t2, t3]; // for convenient adding to page in for loop below (instead of adding everything individually)
     // create and style div
     const div = document.createElement("div");
     div.style.display = "flex";

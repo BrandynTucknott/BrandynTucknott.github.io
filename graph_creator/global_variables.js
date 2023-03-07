@@ -19,6 +19,9 @@ const creation_box = document.getElementById('creation_box');
  * This section contains lists of variables added by the user
 */
 let verticies = []; // list of verticies
+let edges = []; // list of edges
 
 let x = 0; // mouse x position
 let y = 0; // mouse y position
+
+let sourceVertex; // global spot used to help create edges from one vertex to another

@@ -15,3 +15,9 @@ undirected_edge.addEventListener('click', () =>
 {
     console.log('adding an undirected edge');
 });
+
+// stop the context menu from appearing
+document.addEventListener('contextmenu', (e) =>
+{
+    e.preventDefault();
+});

@@ -20,15 +20,15 @@ span
 }
 </style>
 
-<body style="user-select: none">
+<body style="user-select: none; background-color: black; color: white">
     <!-- control pannel which allows the user to add things to the graph -->
         <!-- control pannel -->
-    <div style="flex-flow: row; justify-content: space-between; border: 1px solid black; width: 15%">
+    <div style="flex-flow: row; justify-content: space-between; border: 1px solid white; width: 15%">
         <!-- ======== left column ======== -->
         <div style="flex-flow: column; margin: 10px">
             <!-- first element: vertex -->
-            <div id="add_vertex" style="flex-flow: column; align-items: center">
-                <div style="border: 1px solid black; border-radius: 50%; width: 25px; height: 25px"></div>
+            <div id="add_vertex" style="flex-flow: column; align-items: center; color: white">
+                <div style="border: 1px solid white; border-radius: 50%; width: 25px; height: 25px"></div>
                 <span>Vertex</span>
             </div>
 
@@ -36,10 +36,10 @@ span
             <div id="undirected_edge" style="flex-flow: column; margin: 10px">
                 <div style="flex-flow: column; align-items: center">
                     <!-- arrow -->
-                    <div style="flex-flow: row">
-                        <div style="width: 0px; height: 0px; border-right: 15px solid black; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
-                        <div style="border: 3px solid black; width: 35px; height: 0px; margin-top: 4px;"></div>
-                        <div style="width: 0px; height: 0px; border-left: 15px solid black; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
+                    <div style="flex-flow: row; color:white">
+                        <div style="width: 0px; height: 0px; border-right: 15px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
+                        <div style="border: 3px solid white; width: 35px; height: 0px; margin-top: 4px;"></div>
+                        <div style="width: 0px; height: 0px; border-left: 15px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
                     </div>
                     <span>Edge</span>
                 </div>
@@ -51,12 +51,12 @@ span
         <!-- ======== right column ======== -->
         <div style="display: flex; flex-flow: column; margin: 10px">    
             <!-- first element: directed edge -->
-            <div id="add_dir_edge" style="flex-flow: column">
+            <div id="add_dir_edge" style="flex-flow: column; color: white">
                 <div style="flex-flow: column; margin-top: 7px; align-items: center;">
                     <!-- arrow -->
                     <div style="flex-flow: row">
-                        <div style="border: 3px solid black; width: 35px; height: 0px; margin-top: 4px;"></div>
-                        <div style="width: 0px; height: 0px; border-left: 15px solid black; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
+                        <div style="border: 3px solid white; width: 35px; height: 0px; margin-top: 4px;"></div>
+                        <div style="width: 0px; height: 0px; border-left: 15px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent"></div>
                     </div>
                     <span style="margin-top: 5px">Directed Edge</span>
                 </div>
@@ -71,12 +71,14 @@ span
     <div style="width: 15%; border: 1px solid black; flex-flow: column">
         <p>* Left click an element in the panel above to add the clicked element</p>
         <p>* Right click an existing element to delete it</p>
+        <p>* Left click + drag a vertex to move it around</p>
+        <p>* Right click + drag a vertex onto another vertex to create a directed edge from starting to ending vertex</p>
     </div>
     <!-- end of instructions panel -->
 
 
     <!-- start of creation box -->
-    <div id="creation_box" style="width: 15%; height: 15%; border: 1px dashed orange; overflow: auto"></div>
+    <div id="creation_box" style="width: 15%; height: 15%; overflow: auto"></div>
     <!-- end of creation box -->
 
     <!-- scripts to interact with the page -->
