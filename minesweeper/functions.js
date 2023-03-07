@@ -353,3 +353,38 @@ function endTimer()
 {
     clearInterval(timer);
 }
+
+function changePageTextColor(color)
+{
+    body.style.color = color;
+    viewmode.style.color = color;
+    restart.style.color = color;
+    slider.style.color = color;
+}
+
+function flipViewmode()
+{
+    // if in lightmode, switch to darkmode
+    if (background_color == lightmode_background_color)
+    {
+        background_color = darkmode_background_color;
+        top_square_color = darkmode_top_square_color;
+        bottom_square_color = darkmode_bottom_square_color;
+        restartGame();
+        changePageTextColor('white');
+        body.style.backgroundColor = darkmode_page_background;
+        restart.style.backgroundColor = darkmode_button;
+        viewmode.style.backgroundColor = darkmode_button;
+        return;
+    }
+
+    // else in darkmode, switch to lightmode
+    background_color = lightmode_background_color;
+    top_square_color = lightmode_top_square_color;
+    bottom_square_color = lightmode_bottom_square_color;
+    changePageTextColor('black');
+    body.style.backgroundColor = lightmode_page_background;
+    restart.style.backgroundColor = lightmode_button;
+    viewmode.style.backgroundColor = lightmode_button;
+    restartGame();
+}

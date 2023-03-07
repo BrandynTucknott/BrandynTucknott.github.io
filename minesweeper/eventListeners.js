@@ -125,3 +125,8 @@ slider.addEventListener('input', () =>
     let num = parseInt(slider.value);
     updateNumMines(num);
 });
+
+viewmode.addEventListener('click', () =>
+{
+    flipViewmode();
+});

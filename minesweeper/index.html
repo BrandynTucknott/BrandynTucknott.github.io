@@ -63,12 +63,26 @@
         display: flex;
         justify-content: center;
     }
+
+    button
+    {
+        border: 1px solid gray;
+        border-radius: 20px;
+    }
+
+    button:hover
+    {
+        border: 1px solid rgb(50, 50, 50);
+        background-color: rgb(150, 150, 150);
+    }
 </style>
-<body style="background-color: rgb(230, 230, 230); user-select: none">
+<body id="body" style="background-color: rgb(230, 230, 230); user-select: none">
     <div class="game-interface">
         <canvas id="canvas" width="1" height="1"></canvas>
         <br>
         <section class="instructions_and_controls">
+            <button id="viewmode">Toggle View Mode</button>
+            <br>
             <button id="restart">Restart</button>
             <br>
             <span>Left click to check a square</span>

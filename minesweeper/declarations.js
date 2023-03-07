@@ -6,11 +6,27 @@ const slider = document.getElementById('slider');
 const flag_count = document.getElementById('flag-count');
 const message_box = document.getElementById('message-box');
 const clock = document.getElementById('clock');
+const viewmode = document.getElementById('viewmode');
+const body = document.getElementById('body');
+
+const lightmode_background_color = 'rgb(210, 210, 210)';
+const lightmode_top_square_color = 'white';
+const lightmode_bottom_square_color = 'rgb(180, 180, 180)';
+
+const darkmode_background_color = 'rgb(70, 70, 70)';
+const darkmode_top_square_color = 'rgb(150, 150, 150)';
+const darkmode_bottom_square_color = 'rgb(0, 0, 0)';
+
+const lightmode_page_background = 'rgb(230, 230, 230)';
+const darkmode_page_background = 'rgb(80, 80, 80)';
+
+const lightmode_button = 'rgb(240, 240, 240)';
+const darkmode_button = 'rgb(90, 90, 90)';
 
 
-const background_color = "rgb(210, 210, 210)";
-const top_square_color = "white";
-const bottom_square_color = "rgb(180, 180, 180)";
+let background_color = lightmode_background_color;
+let top_square_color = lightmode_top_square_color;
+let bottom_square_color = lightmode_bottom_square_color
 
 // 1 = blue
 const oneAdjacentMine = "blue";
