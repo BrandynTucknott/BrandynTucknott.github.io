@@ -6,6 +6,7 @@ const slider = document.getElementById('slider');
 const flag_count = document.getElementById('flag-count');
 const message_box = document.getElementById('message-box');
 const clock = document.getElementById('clock');
+const clock_box = document.getElementById('clock-box');
 const viewmode = document.getElementById('viewmode');
 const body = document.getElementById('body');
 

@@ -360,6 +360,9 @@ function changePageTextColor(color)
     viewmode.style.color = color;
     restart.style.color = color;
     slider.style.color = color;
+    range_box.style.color = color;
+    message_box.style.color = color;
+    clock.style.color = color;
 }
 
 function flipViewmode()
@@ -375,6 +378,10 @@ function flipViewmode()
         body.style.backgroundColor = darkmode_page_background;
         restart.style.backgroundColor = darkmode_button;
         viewmode.style.backgroundColor = darkmode_button;
+        range_box.style.backgroundColor = darkmode_button;
+        message_box.style.backgroundColor = darkmode_button;
+        clock.style.backgroundColor = darkmode_button;
+        clock_box.style.backgroundColor = darkmode_button;
         return;
     }
 
@@ -386,5 +393,9 @@ function flipViewmode()
     body.style.backgroundColor = lightmode_page_background;
     restart.style.backgroundColor = lightmode_button;
     viewmode.style.backgroundColor = lightmode_button;
+    range_box.style.backgroundColor = lightmode_button;
+    message_box.style.backgroundColor = lightmode_button;
+    clock.style.backgroundColor = lightmode_button;
+    clock_box.style.backgroundColor = lightmode_button;
     restartGame();
 }
