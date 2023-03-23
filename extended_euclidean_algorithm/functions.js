@@ -29,9 +29,9 @@ function appendToPage(a, b, q, r, s1, s2, s3, t1, t2, t3)
 function calculateGCD()
 {
     if (inputA < inputB)
-        EEA(inputB, inputA, Math.floor(inputB/inputA), inputB % inputA, 1, 0, 1, 0, 1, 0 - 1 * Math.floor(inputB/inputA), true);
+        EEA(inputB, inputA, Math.abs(Math.floor(inputB/inputA)), inputB % inputA, 1, 0, 1, 0, 1, 0 - 1 * Math.abs(Math.floor(inputB/inputA)), true);
     else
-        EEA(inputA, inputB, Math.floor(inputA/inputB), inputA % inputB, 1, 0, 1, 0, 1, 0 - 1 * Math.floor(inputA/inputB), false);
+        EEA(inputA, inputB, Math.abs(Math.floor(inputA/inputB)), inputA % inputB, 1, 0, 1, 0, 1, 0 - 1 * Math.abs(Math.floor(inputA/inputB)), false);
 }
 
 function EEA(a, b, q, r, s1, s2, s3, t1, t2, t3, switched)
@@ -57,7 +57,7 @@ function EEA(a, b, q, r, s1, s2, s3, t1, t2, t3, switched)
         children[children.length] = gcd;
         return;
     }
-    return EEA(b, r, Math.floor(b/r), b % r, s2, s3, s2 - s3 * Math.floor(b/r), t2, t3, t2 - t3 * Math.floor(b/r), switched);
+    return EEA(b, r, Math.abs(Math.floor(b/r)), b % r, s2, s3, s2 - s3 * Math.abs(Math.floor(b/r)), t2, t3, t2 - t3 * Math.abs(Math.floor(b/r)), switched);
 }
 
 function clearPage()
