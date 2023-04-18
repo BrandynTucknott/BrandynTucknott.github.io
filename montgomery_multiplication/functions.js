@@ -25,8 +25,8 @@ function reduction(x)
     let n_prime = EEA(n, r)[1];
 
     let q = ((x % r) * n_prime) % r;
-    let alpha = (x - q * n) / r;
-    if (alpha < 0)
-        alpha += n;
-    return alpha;
+    let a = (x - q * n) / r;
+    if (a < 0)
+        a += n;
+    return a;
 }
