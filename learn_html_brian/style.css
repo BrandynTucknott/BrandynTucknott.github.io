@@ -1,0 +1,40 @@
+body {
+    background-image: url('police.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#clock-body {
+    display: flex;
+    font-size: 70pt;
+    font-family: 'Brush Script MT';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+#date {
+    display: flex;
+    font-size: 40pt;
+    font-family: 'Brush Script MT';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: black;
+}
+
+.marlett {
+    font-family: 'Marlett';
+    color: white;
+    text-shadow: -1px -1px black;
+}
+
+#date, #clock-body{
+    text-shadow: 1px 1px white;
+}
