@@ -1,0 +1,33 @@
+.main-body
+{
+    display: flex;
+    flex-flow: row;
+}
+
+button {
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: auto;
+}
+
+button:hover {
+    background-color: lightgray;
+    border: 2px solid green;
+}
+
+button:active {
+    transform: translate(1px, 1px);
+}
+
+#background-color-changer {
+    border: 1px solid black;
+}
+
+.label {
+    font: "Times New Roman";
+    padding: 5px;
+    font-size: 16pt;
+    font-weight: bold;
+}
