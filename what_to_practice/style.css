@@ -1,0 +1,30 @@
+body {
+    background-color: rgb(50, 50, 50); /* Dark Gray */
+    color: lightgray;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#getPiece {
+    border: 1px solid white;
+    border-radius: 9px;
+    font-size: 18pt;
+    font-family: 'IrisUPC', 'Times New Roman';
+    margin: 10px 10px 10px 10px;
+    padding: 5px;
+}
+
+#getPiece:hover {
+    background: rgb(210, 210, 210);
+}
+
+#getPiece:active {
+    
+}
+
+#display-pieces {
+    display: flex;
+    flex-flow: row;
+}
