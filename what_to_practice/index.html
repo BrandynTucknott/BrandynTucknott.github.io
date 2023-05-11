@@ -12,14 +12,29 @@
 
 <body>
     <div>
+        <!-- user interactions here -->
         <div id="control-panel">
             <button id="getPiece">Get Random Piece</button>
         </div>
 
+        <!-- messages to user here -->
+        <p id="message"></p>
+
+        <!-- put the piece chosen to play here -->
+        <div id="piece-to-play">
+
+        </div>
+
+        <!-- visual divider -->
+        <div style="width: 200%; height: 1px; border: 1px solid white; transform: translateX(-25%)"></div>
+
+        <!-- list available pieces here -->
         <div id="display-pieces">
-            <div id="la_campanella" class="piece"></div>
-            <div id="sincerely" class="piece"></div>
-            <div id="idol" class="piece"></div>
+            <div id="la_campanella" class="piece">La Campanella</div>
+            <div id="sincerely" class="piece">Sincerely</div>
+            <div id="idol" class="piece">Idol</div>
+            <div id="chopin-ballade-3" class="piece"> Chopin Ballade No.3</div>
+            <div id="chopin-ballade-1" class="piece">Chopin Ballade No.1</div>
         </div>
     </div>
 </body>
