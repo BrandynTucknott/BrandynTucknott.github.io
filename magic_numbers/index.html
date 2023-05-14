@@ -1,0 +1,59 @@
+<!-- HEADER COMMENT
+ * GROUP MEMBERS: Brandyn Tucknott
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <title>Magic Numbers</title>
+</head>
+<body>
+    <header>Magic Numbers</header>
+    <div>
+        <section id="top-text">
+            <span id="goal">Goal: 0</span>
+            <span id="wins"> Wins: 0</span>
+            <span id="losses">Losses: 0</span>
+        </section>
+        <div id="game-board">
+            <div id="tiles">
+                <!-- tiles 1 - 4 -->
+                <table>
+                    <!-- row 1 -->
+                    <tr>
+                        <td>Num 1</td>
+                        <td>Num 2</td>
+                    </tr>
+                    <!-- row 2 -->
+                    <tr>
+                        <td>Num 3</td>
+                        <td>Num 4</td>
+                    </tr>
+                </table>
+            </div>
+            <!-- add, subtract, multiply -->
+            <div id="operations">
+                <button>x</button>
+                <button>+</button>
+                <button>-</button>
+            </div>
+            <!-- work the user has done so far -->
+            <div id="workspace">
+                <span id="workspace-header">Workspace</span>
+                <!-- another section for ease of centering -->
+                <section>
+                    <span id="workspace-output"></span>
+                </section>
+            </div>
+        </div>
+        <p id="message">Temp</p>
+        <button id="restart">New Game</button>
+    </div>
+    <footer>Brandyn Tucknott</footer>
+</body>
+</html>

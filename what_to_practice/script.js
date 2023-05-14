@@ -19,7 +19,7 @@ button.addEventListener('click', () =>
         let toPlay = getPiece();
         hasPiece = true;
         toPlayParent.appendChild(toPlay);
-        // toPlay.getElementsByClassName.backgroundImage = 'radial-gradient(circle, green, black)';
+        toPlay.style.borderImage = 'radial-gradient(green, lightgreen) 1';
     }
     else // a piece has already been selected
     {

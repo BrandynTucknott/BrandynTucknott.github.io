@@ -1,0 +1,10 @@
+body {
+    background-color: rgb(50, 50, 50);
+    color: lightgray;
+    display: flex;
+}
+
+input {
+    background-color: rgb(50, 50, 50);
+    color: lightgray;
+}

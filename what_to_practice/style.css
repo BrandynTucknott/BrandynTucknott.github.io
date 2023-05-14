@@ -1,4 +1,4 @@
-body, #control-panel, #display-pieces, #piece-to-play {
+body, #control-panel, #display-pieces, #piece-to-play, #message {
     background-color: rgb(50, 50, 50); /* Dark Gray */
     color: lightgray;
     display: flex;
@@ -30,7 +30,7 @@ body, #control-panel, #display-pieces, #piece-to-play {
 }
 
 .piece {
-    width: 100%;
+    width: 250px;
     height: 40px;
     text-align: center;
 }
