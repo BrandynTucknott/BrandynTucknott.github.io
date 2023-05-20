@@ -10,6 +10,8 @@ const losses = document.getElementById('losses');
 const workspace = document.getElementById('workspace-output');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart');
+const correctPathHeader = document.getElementById('correct-path-header');
+const correctPath = document.getElementById('correct-path');
 
 /* Method to determine what to output to the workspace:
 0 - waiting for the first number to be input
@@ -25,11 +27,15 @@ let picked = []; // numbers the user has picked
 let totalUncheckedTiles = tileTags.length;
 let totalWins = 0;
 let totalLosses = 0;
+let path = ''; // path of the solution to prove each combination  was possible
+let currentTile = 0; // tile that the user last clicked (will display their current total)
+let gameEnd = false; // gameEnd = false: game is still going
 
 // reset the board with new numbers when called
 function newGame()
 {
     generateNumbers();
+    path = generateGoal();
     goal.innerText = `Goal: ${target}`;
     workspace.innerText = '';
     waitingFor = 0;
@@ -37,6 +43,10 @@ function newGame()
     total = 0;
     currentOperation = -1;
     message.innerText = "Let's Play!";
+    correctPath.innerText = '';
+    correctPathHeader.innerText = '';
+    currentTile = 0;
+    gameEnd = false;
 }
 
 // generates a positive digit for each of the tiles
@@ -54,25 +64,42 @@ function generateNumbers()
 // does random operations on the generated numbers to get a goal
 function generateGoal()
 {
-    let goal = nums[0];
-    for (let i = 1; i < nums.length; i++)
+    let numsCopy = structuredClone(nums); // copy array so that elements can be removed from copy
+    let randIndex = Math.floor(Math.random() * numsCopy.length); // get a random number to be the first number
+    let goal = numsCopy.pop(randIndex);
+
+    let path = '';
+
+    while (numsCopy.length > 0)
     {
-        // random number between 0 and 2
+        // get a random number
+        randIndex = Math.floor(Math.random() * numsCopy);
+        let val = numsCopy.pop(randIndex);
+
+        // get a random operation
         let operation = Math.floor((Math.random() * 3));
         switch(operation)
         {
             case 0:
-                goal *= nums[i];
+                path += `${goal}`;
+                goal *= val;
+                path += ` * ${val} = ${goal}\n`;
                 break;
             case 1:
-                goal += nums[i];
+                path += `${goal}`;
+                goal += val;
+                path += ` + ${val} = ${goal}\n`;
                 break;
             case 2:
-                goal -= nums[i];
+                path += `${goal}`;
+                goal -= val;
+                path += ` - ${val} = ${goal}\n`;
                 break;
         }
     }
+
     target = goal;
+    return path;
 }
 
 // updates the current user number; called after all numbers and operations have been selected
@@ -120,19 +147,18 @@ for (let i = 0; i < tileTags.length; i++)
                 workspace.innerText += ` ${nums[i]} = ${updateTotal(nums[i])}`;
                 waitingFor = 1; // the total will be reset as their num1, they need to choose an operation now
                 picked[i] = true;
-                tileTags[i].innerText = ''; // make it clear to the user that this number is not selectable
+                if (currentTile != 0)
+                    currentTile.innerText = ''; // clear the former last tile the user selected
+                currentTile = tileTags[i];
+                tileTags[i].innerText = `Total:\n${total}`; // make it clear to the user that this number is not selectable
                 totalUncheckedTiles--;
                 message.innerText = 'Choose an Operator';
 
                 // start next line if viable
                 if (totalUncheckedTiles > 0)
-                {
                     workspace.innerText += `\n${total}`;
-                }
                 else
-                {
                     resolveEndGame();
-                }
                 return;
         } 
     });
@@ -143,6 +169,8 @@ for (let i = 0; i < operations.length; i++)
 {
     operations[i].addEventListener('click', () =>
     {
+        if (gameEnd) // don't print stuff out if the game is over
+            return;
         switch (waitingFor)
         {
             case 1: // waiting for an operation
@@ -176,9 +204,12 @@ function resolveEndGame()
     }
     else // user loss
     {
-        message.innerText = 'Better Luck Next Time...';
+        message.innerText = 'Better Luck Next Time...'
+        correctPathHeader.innerText = 'A Correct Path was:'
+        correctPath.innerText = `${path}`;
         totalLosses++;
         losses.innerText = `Losses: ${totalLosses}`;
     }
+    gameEnd = true;
 
 }

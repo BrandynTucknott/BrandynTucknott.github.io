@@ -7,63 +7,35 @@
     --hoverBackgroundColor: rgb(80, 80, 80);
 }
 
-body {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
+body, button {
     background-color: var(--backgroundColor);
     color: var(--textColor);
 }
 
-/* make heading big and "separated" from the rest of the document */
-header { font-size: 70px; }
-
-header, footer {
-    margin: 20px;
-    padding: 20px;
+body, body > div, #workspace > section {
+    align-items: center;
+    justify-content: center;
 }
 
-#top-text {
-    flex-flow: row;
-    font-size: 25px;
-}
-/* space out the goal, wins, and losses text */
-#top-text span {
-    padding: 30px;
-}
-
-#game-board {
+#game-board, #workspace > section, #top-text {
     display: flex;
     flex-flow: row;
 }
-/* space out the tiles, operations, and workspace */
-#game-board div {
-    padding: 30px;
-}
 
-table {
-    font-size: 35px;
-}
-
-table tr td {
-    padding: 35px;
+table tr td {   
     border: 1px solid var(--textColor);
-}
-
-td:hover {
-    background-color: var(--hoverBackgroundColor);
+    width: 100px;
+    height: 100px;
+    text-align: center;
 }
 
 /* display operatinos in a column */
-#operations {
+#operations, #workspace, body, body > div {
     display: flex;
     flex-flow: column;
 }
 
 button {
-    background-color: var(--backgroundColor);
-    color: var(--textColor);
     text-align: center;
     margin: 10px;
 }
@@ -74,41 +46,27 @@ button {
     font-size: 25px;
 }
 
-#restart {
-    font-size: 20px;
-    padding: 10px;
-}
+header, footer { padding: 20px; }
 
-#message {
-    font-size: 20px;
-}
+#restart { padding: 10px; }
 
-button:hover {
-    background-color: var(--hoverBackgroundColor);
-}
+td:hover, button:hover { background-color: var(--hoverBackgroundColor); }
 
-#workspace {
-    display: flex;
-    flex-flow: column;
-    font-size: 18px;
-}
+#message, #restart { font-size: 20px; }
+
+#workspace { font-size: 18px; }
+
+table { font-size: 35px; }
+
+/* space out the tiles, operations, and workspace */
+#game-board div, #top-text span{ padding: 30px; }
+
+#top-text, #workspace-header { font-size: 25px; }
+
+/* make heading big and "separated" from the rest of the document */
+header { font-size: 70px; }
 
 #workspace-header {
     position: relative;
     bottom: 3%;
-    font-size: 25px;
-}
-
-#workspace > section {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: center;
-}
-
-body > div {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
 }
