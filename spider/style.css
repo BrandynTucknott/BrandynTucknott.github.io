@@ -1,0 +1,43 @@
+:root {
+    --backgroundColor: black;
+    --borderColor: white;
+    --footLen: 7px;
+    --headSize: 21px;
+    --bodySize: 28px;
+}
+
+body {
+    background-color: var(--backgroundColor);
+}
+
+.spider {
+    border: 1px solid var(--borderColor);
+    box-shadow: 0 0 5px var(--borderColor);
+}
+
+.foot {
+    width: var(--footLen);
+    height: var(--footLen);
+    border-radius: var(--footLen);
+    position: absolute;
+}
+
+.head {
+    width: var(--headSize);
+    height: var(--headSize);
+    border-radius: var(--headSize);
+}
+
+.body {
+    width: var(--bodySize);
+    height: var(--bodySize);
+    border-radius: var(--bodySize);
+}
+
+#spider-head-body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
