@@ -38,4 +38,4 @@ const bodyTagLen = findNumberInCssLine(lines[5]);
 const spiderHeadBodyTagHeight = headTagLen + bodyTagLen;
 const spiderHeadBodyTagWidth = bodyTagLen;
 
-let currentNormVec = [x, y]; // used in determining how to rotate the spider
+let currentVec = [x, y]; // used in determining how to rotate the spider
