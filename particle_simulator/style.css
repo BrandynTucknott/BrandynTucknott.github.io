@@ -1,0 +1,13 @@
+:root {
+    --backgroundColor: black;
+    --borderColor: white;
+}
+
+body {
+    background-color: var(--backgroundColor);
+}
+
+.particle {
+    border: 1px solid var(--borderColor);
+    box-shadow: 0 0 5px var(--borderColor);
+}

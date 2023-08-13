@@ -106,7 +106,7 @@ writeToPage(); // draws the image
 This part of the code will register any calls by the user to zoom in or out
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-cvs.addEventListener("mousedown", function(click)
+cvs.addEventListener("click", function(click)
 {
     // let click = window.event; // register a click from a mouse button
 

@@ -3,10 +3,13 @@ const headTag = document.getElementsByClassName('head')[0];
 const bodyTag = document.getElementsByClassName('body')[0];
 const spiderHeadBodyTag = document.getElementById('spider-head-body');
 
-const positionUpdateTimeInterval = 10; // ms before mouse position is updated
-let x = -1; // values to let me know if x,y were untouched
-let y = -1;
-let locked = true;
+const WIDTH = window.innerWidth;
+const HEIGHT = window.innerHeight;
+
+const positionUpdateTimeInterval = 50; // ms before mouse position is updated
+let x = WIDTH / 2;
+let y = HEIGHT / 2;
+let locked = false;
 
 let txtFile = new XMLHttpRequest();
 let lines;
@@ -38,4 +41,8 @@ const bodyTagLen = findNumberInCssLine(lines[5]);
 const spiderHeadBodyTagHeight = headTagLen + bodyTagLen;
 const spiderHeadBodyTagWidth = bodyTagLen;
 
-let currentVec = [x, y]; // used in determining how to rotate the spider
+let lastPosVec = [x, y]; // used in determining how to rotate the spider
+
+spiderHeadBodyTag.style.left = `${WIDTH / 2}px`;
+spiderHeadBodyTag.style.top = `${HEIGHT / 2}px`;
+spiderHeadBodyTag.style.border = `2px solid yellow`;

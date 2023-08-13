@@ -40,4 +40,5 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
+    transform-origin: 50% 0%;
 }

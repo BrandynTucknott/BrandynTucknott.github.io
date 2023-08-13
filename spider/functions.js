@@ -1,22 +1,67 @@
 function moveSpiderToMouse()
 {
-    const TIME_TO_MOVE = 1000; // ms required to move spider to point
-    const ITERATIONS_TO_COMPLETE_MOVE = 10;
-    // recall currentVec stores the previous position
-    const deltaX = (x - currentVec[0]) / ITERATIONS_TO_COMPLETE_MOVE;
-    const deltaY = (y - currentVec[1]) / ITERATIONS_TO_COMPLETE_MOVE;
+    // const TIME_TO_MOVE = 100; // ms required to move spider to point
+    const ITERATIONS_TO_COMPLETE_MOVE = 1;
+    // recall lastPosVec stores the previous position
     for (let i = 0; i < ITERATIONS_TO_COMPLETE_MOVE; i++)
     {
-        let newX = (i + 1) * deltaX - spiderHeadBodyTagWidth / 2;
-        let newY = (i + 1) * deltaY;
-        spiderHeadBodyTag.style.left = `${newX}px`;
-        spiderHeadBodyTag.style.top = `${newY}px`;
+        // ==================== SECTION TO ROTATE =====================
+        // normalize and convert to cartesian
+        const normX = x / WIDTH;
+        const normY = y / HEIGHT;
+        const normPrevX = lastPosVec[0] / WIDTH;
+        const normPrevY = lastPosVec[1] / HEIGHT;
 
-        let theta = Math.acos((newX * newY) / (1 * magnitude(newX, newY)));
+        const cartesianNormX = normX;
+        const cartesianNormY = 1 - normY;
+        const cartesianNormPrevX = normPrevX;
+        const cartesianNormPrevY = 1 - normPrevY;
 
-        spiderHeadBodyTag.style.transform = `rotate(${theta}rad)`;
+        const deltaX = cartesianNormX - cartesianNormPrevX;
+        const deltaY = cartesianNormY - cartesianNormPrevY;
 
-        setTimeout(() => {}, TIME_TO_MOVE / ITERATIONS_TO_COMPLETE_MOVE);
+        if (deltaX == 0 | deltaY == 0)
+            continue; // don't rotate
+        
+
+        let theta = Math.atan(deltaY / deltaX);
+
+        // logic to find theta; idk how I made this
+        if (deltaX < 0 && deltaY < 0) // bottom left
+        {
+            // console.log('bottom left');
+            theta += Math.PI / 2;
+            theta = -theta;
+        }
+
+        else if (deltaX < 0 && deltaY > 0) // top left
+        {
+            // console.log('top left');
+            theta = Math.PI / 2 - theta;
+            theta += Math.PI;
+        }
+
+        else if (deltaX > 0 && deltaY < 0) // bottom right
+        {
+            // console.log('bottom right');
+            theta += Math.PI / 2;
+            theta = -theta;
+            theta += Math.PI;
+        }
+
+        else if (deltaX > 0 && deltaY > 0) // top right
+        {
+            // console.log('top right');
+            theta = Math.PI / 2 - theta;
+        }
+
+        spiderHeadBodyTag.style.transform = `rotate(${theta}rad)`; // ========== END OF ROTATE ===========
+
+        // ==================== SECTION TO MOVE =======================
+        spiderHeadBodyTag.style.left = `${x - spiderHeadBodyTagWidth / 2}px`;
+        spiderHeadBodyTag.style.top = `${y}px`;
+        
+        // setTimeout(null, TIME_TO_MOVE / ITERATIONS_TO_COMPLETE_MOVE);
     }
 }
 
