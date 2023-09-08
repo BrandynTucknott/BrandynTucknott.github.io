@@ -1,0 +1,78 @@
+:root{
+    --backgroundColor: rgb(30, 30, 30);
+    --textColor: white;
+
+    --hoverColor: rgb(60, 60, 60);
+}
+
+body{
+    background-color: var(--backgroundColor);
+    color: var(--textColor);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#control-panel {
+    /* align-items: center; */
+    display: inline;
+    flex-flow: row;
+    padding: 10px;
+    margin: 10px;
+}
+
+#winners-list {
+    display: none;
+}
+
+#pick-num-winners {
+    width: 50px;
+}
+
+#pick-winners, #clear {
+    height: 25px;
+    width: 100px;
+    font-size: 10pt;
+}
+
+button, input {
+    background-color: var(--backgroundColor);
+    border: 1px solid gray;
+    border-radius: 15px;
+    color: var(--textColor);
+    text-align: center;
+}
+
+
+button:hover, input:hover {
+    background: var(--hoverColor);
+}
+
+button:active {
+    transform: translate(1px, 1px);
+}
+
+table{
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+th {
+    border-bottom: 1px solid white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+td {
+    /* border: 1px solid white; */
+    text-align: center;
+}
+
+.remove-button-box{
+    width: 100px;
+}
+
+#add-row-button {
+    width: 40%;
+    height: 25px;
+}
