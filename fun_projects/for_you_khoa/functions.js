@@ -1,8 +1,10 @@
-function addRow()
+function addRow(memberName, memberPoints, memberIndexPosition)
 {
     let member = new Member();
     membersArray.push(member);
-    member.indexPosition = membersArray.length - 1;
+    member.indexPosition = memberIndexPosition;
+    member.name = memberName;
+    member.points = memberPoints;
     
     let remove_button_td = document.createElement('td');
     let remove_button = document.createElement('button');
@@ -13,14 +15,14 @@ function addRow()
     let name_td = document.createElement('td');
     let name = document.createElement('input');
     name.classList.add('name');
-    name.value = '-';
+    name.value = memberName;
     name_td.appendChild(name);
 
     let points_td = document.createElement('td');
     let points = document.createElement('input');
     points.classList.add('score-input');
     points.type = 'number';
-    points.value = 0;
+    points.value = memberPoints;
     points.min = 0;
     points_td.appendChild(points);
 
@@ -38,6 +40,8 @@ function addRow()
 
     let initVal = parseInt(points.value);
 
+    localStorage.setItem('members', JSON.stringify(membersArray));
+
     points.addEventListener('change', () =>
     {
         let currentVal = parseInt(points.value);
@@ -46,6 +50,8 @@ function addRow()
 
         evaluatePickPercentages();
         member.points = initVal;
+        localStorage.setItem('members', JSON.stringify(membersArray));
+        localStorage.setItem('totalPoints', totalPoints);
     });
 
     remove_button.addEventListener('click', () =>
@@ -55,11 +61,14 @@ function addRow()
         evaluatePickPercentages();
         membersArray.splice(member.indexPosition, 1);
         updateHigherIndexMembers(member.indexPosition);
+        localStorage.setItem('members', JSON.stringify(membersArray));
+        localStorage.setItem('totalPoints', totalPoints);
     });
 
     name.addEventListener('change', () =>
     {
         member.name = name.value;
+        localStorage.setItem('members', JSON.stringify(membersArray));
     });
 }
 

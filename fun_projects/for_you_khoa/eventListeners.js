@@ -1,6 +1,6 @@
 num_winners_input.addEventListener('change', () =>
 {
-    
+    localStorage.setItem('numWinners', num_winners_input.value);
 });
 
 pick_winners_button.addEventListener('click', () =>
@@ -58,6 +58,7 @@ pick_winners_button.addEventListener('click', () =>
 
 clear_button.addEventListener('click', () =>
 {
+    localStorage.clear(); // clear memory
     totalPoints = 0;
     while (table.children.length > 1)
     {
@@ -69,5 +70,5 @@ clear_button.addEventListener('click', () =>
 
 add_row_button.addEventListener('click', () =>
 {
-    addRow();
+    addRow('-', 0, membersArray.length - 1);
 });

@@ -13,11 +13,10 @@ let membersArray = [] // array of all members in the table
 /*
 LOCAL STORAGE FORMAT
 
-numWinners
-totalPoints
-names
+'numWinners'
+'totalPoints'
+'members'
 
-points and percentages are stored under their [names] key
 */
 
 class Member
