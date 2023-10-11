@@ -23,7 +23,6 @@ function moveSpiderToMouse()
         if (deltaX == 0 | deltaY == 0)
             continue; // don't rotate
         
-
         let theta = Math.atan(deltaY / deltaX);
 
         // logic to find theta; idk how I made this

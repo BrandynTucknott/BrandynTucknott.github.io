@@ -1,0 +1,13 @@
+Ocean
+River
+Grassland
+Sky
+Mountainside
+Underground
+Ice Spike
+Frozen Ocean
+Forest
+Beach
+Jungle
+Savannah
+Behind or Under a Waterfall

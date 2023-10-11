@@ -1,4 +1,11 @@
-This is in structures
-line 2
-line 3
-This is the end of structures
+Barn
+Temple
+Farmland Field
+Dock
+Village
+Mine
+Modern Style Structure
+Campsite
+Masted Ship
+Castle
+Witch's Hut
