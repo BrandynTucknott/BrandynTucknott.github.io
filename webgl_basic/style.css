@@ -1,20 +1,50 @@
 :root {
     --background-color: rgb(50, 50, 50);
+    --button-hover: rgb(60, 60, 60);
     --text-color: rgb(200, 200, 200);
 }
 
-body, input, #control-panel {
+body, #control-panel, button, #matrix-section {
     background-color: var(--background-color);
     color: var(--text-color);
     flex-flow: row;
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 20px;
     align-items: center;
     text-align: center;
+    border-radius: 8px;
 }
 
-:is(#matrix1, #matrix2) {
+table, input {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 50px;
+}
+
+#x {
+    position: relative;
+    top: -10px;
+}
+
+table {
+    /* border: 1px solid white; */
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+button:hover{
+    background-color: var(--button-hover);
+}
+
+:is(#matrix1, #matrix2, body) {
     flex-flow: column;
     display: flex;
 }

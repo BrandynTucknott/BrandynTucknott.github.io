@@ -15,20 +15,28 @@
         <div id="matrix1">
             <p>Matrix 1</p>
             <span>Rows: <input type="number" id="row1-input" value="2" min="1" max="20" step="1"></span>
-            <span>Columns: <input type="number" id="column1-input" value="2" min="1" max="20" step="1"></span></div>
+            <span>Columns: <input type="number" id="column1-input" value="2" min="1" max="20" step="1"></span>
+        </div>
         <div id="matrix2">
             <p>Matrix 2</p>
             <span>Rows: <input type="number" id="row2-input" value="2" min="1" max="20" step="1"></span>
-            <span>Columns: <input type="number" id="column2-input" value="2" min="1" max="20" step="1"></span></div>
-        </div>
-        <div id="product-matrix">
-            <p>Product Matrix</p>
-            <span id="product-matrix-description">2 x 2</span>
+            <span>Columns: <input type="number" id="column2-input" value="2" min="1" max="20" step="1"></span>
         </div>
     </div>
     <div id="matrix-section">
         <table id="matrix1-entries"></table>
+        <span id="x">X</span>
         <table id="matrix2-entries"></table>
+    </div>
+
+    <button id="calculate">calculate product</button>
+
+    <div>
+        <div id="product-matrix">
+            <p>Product Matrix</p>
+            <span id="product-matrix-description">2 x 2</span>
+        </div>
+        <table id="product-matrix-entries"></table>
     </div>
 </body>
 </html>

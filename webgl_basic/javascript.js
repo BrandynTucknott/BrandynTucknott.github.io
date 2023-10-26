@@ -7,6 +7,9 @@ const product_matrix_description_element = document.getElementById('product-matr
 const matrix_input_box_size = 50;
 const matrix1_entries_table = document.getElementById('matrix1-entries');
 const matrix2_entries_table = document.getElementById('matrix2-entries');
+const product_matrix_entries_table = document.getElementById('product-matrix-entries');
+
+recreateMatricies();
 
 // take a number in string form and return it's number form
 function convertInputTextToNum(input_element)
@@ -31,11 +34,95 @@ function rewriteProductMatrix()
     product_matrix_description_element.innerText = `${row1_input_element.value} x ${column2_input_element.value}`;
 }
 
+// delete old matrix and create new matrix
+function recreateMatricies()
+{
+    // Matrix 1
+    let numRows = convertInputTextToNum(row1_input_element);
+    let numCols = convertInputTextToNum(column1_input_element);
+
+    // delete children
+    while (matrix1_entries_table.children.length > 0)
+    {
+        matrix1_entries_table.removeChild(matrix1_entries_table.children[0]);
+    }
+
+    // add children
+    for (let r = 0; r < numRows; r++)
+    {
+        let tr = document.createElement('tr');
+        for (let c = 0; c < numCols; c++)
+        {
+            let td = document.createElement('td');
+            let input = document.createElement('input');
+            input.type = 'number';
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        matrix1_entries_table.appendChild(tr);
+    }
+
+
+    // Matrix 2
+    numRows = convertInputTextToNum(row2_input_element);
+    numCols = convertInputTextToNum(column2_input_element);
+
+    // delete children
+    while (matrix2_entries_table.children.length > 0)
+    {
+        matrix2_entries_table.removeChild(matrix2_entries_table.children[0]);
+    }
+
+    // add children
+    for (let r = 0; r < numRows; r++)
+    {
+        let tr = document.createElement('tr');
+        for (let c = 0; c < numCols; c++)
+        {
+            let td = document.createElement('td');
+            let input = document.createElement('input');
+            input.type = 'number';
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        matrix2_entries_table.appendChild(tr);
+    }
+
+    // product matrix
+    numRows = convertInputTextToNum(row1_input_element);
+    numCols = convertInputTextToNum(column2_input_element);
+
+    // delete children
+    while (product_matrix_entries_table.children.length > 0)
+    {
+        product_matrix_entries_table.removeChild(product_matrix_entries_table.children[0]);
+    }
+
+    // add children
+    for (let r = 0; r < numRows; r++)
+    {
+        let tr = document.createElement('tr');
+        for (let c = 0; c < numCols; c++)
+        {
+            let td = document.createElement('td');
+            let input = document.createElement('input');
+            input.type = 'number';
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        product_matrix_entries_table.appendChild(tr);
+    }
+}
+
+
+
+
 // Matrix 1 rows were changed
 row1_input_element.addEventListener('change', () =>
 {
     convertToValidInput(row1_input_element);
     rewriteProductMatrix();
+    recreateMatricies();
 });
 
 // Matrix 1 columns were changed
@@ -43,6 +130,7 @@ column1_input_element.addEventListener('change', () =>
 {
     convertToValidInput(column1_input_element);
     row2_input_element.value = column1_input_element.value;
+    recreateMatricies();
 }); // change row2 on column1 change
 
 // Matrix 2 rows were changed
@@ -50,6 +138,7 @@ row2_input_element.addEventListener('change', () =>
 {
     convertToValidInput(row2_input_element);
     column1_input_element.value = row2_input_element.value;
+    recreateMatricies();
 }); // change column1 on row2 change
 
 // Matrix 2 columns were changed
@@ -57,4 +146,5 @@ column2_input_element.addEventListener('change', () =>
 {
     convertToValidInput(column2_input_element);
     rewriteProductMatrix();
+    recreateMatricies();
 });
