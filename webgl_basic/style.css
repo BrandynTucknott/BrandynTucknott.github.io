@@ -1,0 +1,20 @@
+:root {
+    --background-color: rgb(50, 50, 50);
+    --text-color: rgb(200, 200, 200);
+}
+
+body, input, #control-panel {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    flex-flow: row;
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+:is(#matrix1, #matrix2) {
+    flex-flow: column;
+    display: flex;
+}

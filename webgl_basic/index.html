@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- This will be the matrix multiplication page -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="RGBtriangleCropped.png">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="javascript.js"></script>
+    <title>WebGL Basics</title>
+</head>
+
+<body>
+    <div id="control-panel">
+        <div id="matrix1">
+            <p>Matrix 1</p>
+            <span>Rows: <input type="number" id="row1-input" value="2" min="1" max="20" step="1"></span>
+            <span>Columns: <input type="number" id="column1-input" value="2" min="1" max="20" step="1"></span></div>
+        <div id="matrix2">
+            <p>Matrix 2</p>
+            <span>Rows: <input type="number" id="row2-input" value="2" min="1" max="20" step="1"></span>
+            <span>Columns: <input type="number" id="column2-input" value="2" min="1" max="20" step="1"></span></div>
+        </div>
+        <div id="product-matrix">
+            <p>Product Matrix</p>
+            <span id="product-matrix-description">2 x 2</span>
+        </div>
+    </div>
+    <div id="matrix-section">
+        <table id="matrix1-entries"></table>
+        <table id="matrix2-entries"></table>
+    </div>
+</body>
+</html>
