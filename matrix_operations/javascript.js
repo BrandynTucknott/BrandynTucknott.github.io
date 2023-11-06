@@ -9,6 +9,10 @@ const matrix1_entries_table = document.getElementById('matrix1-entries');
 const matrix2_entries_table = document.getElementById('matrix2-entries');
 const product_matrix_entries_table = document.getElementById('product-matrix-entries');
 
+const calculate_button_element = document.getElementById('calculate');
+
+let isCalculating = false;
+
 recreateMatricies();
 
 // take a number in string form and return it's number form
@@ -147,4 +151,19 @@ column2_input_element.addEventListener('change', () =>
     convertToValidInput(column2_input_element);
     rewriteProductMatrix();
     recreateMatricies();
+});
+
+
+
+
+// calculate A x B
+calculate_button_element.addEventListener('click', () =>
+{
+    if (isCalculating) // if currently doing a calculation, do nothing
+        return;
+    isCalculating = true; // remove button functionality to prevent spam
+
+
+    
+    isCalculating = false; // calculation is complete, restore button functionality
 });
