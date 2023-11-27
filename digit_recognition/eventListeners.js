@@ -1,5 +1,5 @@
 // colors the grid
-document.addEventListener("mousedown", function(down)
+canvas.addEventListener("mousedown", function(down)
 {
     let posX = down.pageX - canvasBoundingBox.left; // position X and Y
     let posY = down.pageY - canvasBoundingBox.top;
@@ -70,4 +70,16 @@ clear.addEventListener('click', () =>
 {
     clearGrid();
     answerBox.innerText = "N/A";
+    hasChangedBoard = false;
+});
+
+retrain.addEventListener('click', () => 
+{
+    let userConfirmedRetrain = confirm(
+        `Are you sure you want to retrain the network?
+        \nThis will take several minutes, and the accuracy is not guaranteed to go up.
+        \nOpen inspect element before retraining to view progress.`
+    );
+    if (userConfirmedRetrain)
+        processTrainingData(initImageReader, initLabelReader);
 });

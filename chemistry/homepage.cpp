@@ -5,7 +5,7 @@
 
 // art from this link:
 // https://www.patorjk.com/software/taag/#p=display&f=Doom&t=Chemistry%20Program                 
-void printHomePage()
+void printHomePage(std::string** element_symbols, const int NUM_ELEMENTS)
 {
     std::cout << " _____ _                    _     _               ______                                    " << std::endl;
     std::cout << "/  __ \\ |                  (_)   | |              | ___ \\                                   " << std::endl;
@@ -16,8 +16,8 @@ void printHomePage()
     std::cout << "                                            __/ |                  __/ |                    " << std::endl;
     std::cout << "                                           |___/                  |___/                     " << std::endl;
 
-    std::string current_value = "";
+    std::string current_elements = "";
 
     int choice = getUserChoice();
-    resolveChoice(&current_value, choice);
+    resolveChoice(&current_elements, choice, element_symbols, NUM_ELEMENTS);
 }

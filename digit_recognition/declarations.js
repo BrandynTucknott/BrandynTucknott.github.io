@@ -2,7 +2,9 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const button = document.getElementById("button");
 const clear = document.getElementById('clear');
+const retrain = document.getElementById('retrain');
 const answerBox = document.getElementById("output");
+const status_update_div = document.getElementById('status-update');
 
 // makes the whole canvas dependent on the box_dim
 const box_dim = 20; // dimension (px) of a single box in the grid
@@ -17,3 +19,4 @@ const canvasBoundingBox = canvas.getBoundingClientRect();
 let grid = [28][28] = Array.from({length: 28}, () => Array.from({length: 28}, () => new Square()));
 
 let previousSquare = null; // last square the cursor was held down over
+let hasChangedBoard = false;

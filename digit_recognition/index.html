@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <title>Hand Written Digit Recognition</title>
+</head>
+
+<body>
+    <!-- 28 boxes * dimOfBox     +      27 seperators * thicknessOfSeperator -->
+    <canvas id="canvas" width = "840" height = "840" style="border: 1px solid black; background-color: black;"></canvas>
+    <div id="buttons-div">
+        <button id="button">calculate number</button>
+        <button id="clear">reset canvas</button>
+        <button id="retrain">retrain network</button>
+    </div>
+
+    <p></p> <!-- scuffed line spacing -->
+
+    <table style="width:30%" id="table">
+        <tr>
+            <th class="output_label"> Computer Answer </th>
+            <th id="output" class="output"> N/A </th>
+        </tr>
+    </table>
+
+    <script defer src="classes.js"></script>
+    <script defer src = "declarations.js"></script>
+    <script defer src="functions.js"></script>
+    <script defer src="eventListeners.js"></script>
+    <script defer src="drawing_functions.js"></script>
+    <script defer src="read_data.js"></script>
+    <script defer src="test_data.js"></script>
+    <script defer src="main.js"></script>
+    <script defer src="backpropagation.js"></script>
+
+    <div id="status-update"></div>
+</body>
+
+</html>

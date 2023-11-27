@@ -18,6 +18,6 @@ int main()
 
     readCSV(&element_names, &element_symbols, &atomic_masses, NUM_ELEMENTS);
 
-    printHomePage();
+    printHomePage(&element_symbols, NUM_ELEMENTS);
     return 0;
 }

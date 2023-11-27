@@ -1,0 +1,60 @@
+:root {
+    --background-color: rgb(40, 40, 40);
+    --text-color: rgb(100, 100, 100);
+    --button-hover-color: rgb(60, 60, 60);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+p.clearInstructions
+{
+    font-size:25px;
+}
+
+button
+{
+    background-color: var(--background-color);
+    color: var(--text-color); /*text color*/
+    border: 1px solid black;
+    text-align: center;
+    text-decoration: dashed;
+    display: flex;
+    font-size: 25px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+button:hover 
+{
+    background-color: var(--button-hover-color);
+}
+
+button:active 
+{
+    background-color: black;
+    transform: translateY(4px);
+}
+
+th.output_label
+{
+    border: 1px solid black;
+    font-size: 25px;
+    /* width: 1200px; */
+    height: 40px;
+}
+th.output
+{
+    border: 1px solid black;
+    font-size: 25px;
+    width: 100px;
+    height: 40px;
+}
+
+#buttons-div
+{
+    display: flex;
+    flex-flow: row;
+}

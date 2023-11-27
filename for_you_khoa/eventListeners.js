@@ -5,6 +5,11 @@ num_winners_input.addEventListener('change', () =>
 
 pick_winners_button.addEventListener('click', () =>
 {
+    // table.length >= 1 bc 1st row (child) is the header row
+    if (table.children.length == 1)
+    {
+        return;
+    }
     winners_list.style.display = 'block';
     // erase current winners
     while (winners_list.children.length > 0)
@@ -60,12 +65,17 @@ clear_button.addEventListener('click', () =>
 {
     localStorage.clear(); // clear memory
     totalPoints = 0;
-    while (table.children.length > 1)
+    while (table.children.length > 1) // remove everything except the header row
     {
         table.removeChild(table.children[1]);
     }
     num_winners_input.value = 3;
     membersArray = [];
+
+    while (winners_list.children.length > 0)
+    {
+        winners_list.removeChild(winners_list.children[0]);
+    }
 });
 
 add_row_button.addEventListener('click', () =>

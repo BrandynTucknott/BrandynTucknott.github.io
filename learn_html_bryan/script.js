@@ -9,7 +9,7 @@ const clock = document.getElementById('clock-body');
 const html_date = document.getElementById('date');
 let date = new Date();
 
-let day = date.getDay();
+let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
 
@@ -63,7 +63,7 @@ function updateTime()
         hours = 0;
         day++;
         date = new Date();
-        day = date.getDay();
+        day = date.getDate();
         month = date.getMonth();
         year = date.getFullYear();
         html_date.innerHTML = `${day}   ${month_lookup[month]}   ${year}`;
