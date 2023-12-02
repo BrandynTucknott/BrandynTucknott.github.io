@@ -11,7 +11,11 @@
 
 <body>
     <!-- 28 boxes * dimOfBox     +      27 seperators * thicknessOfSeperator -->
-    <canvas id="canvas" width = "840" height = "840" style="border: 1px solid black; background-color: black;"></canvas>
+    <div style="display: flex; flex-flow: row; align-items: center;">
+        <canvas id="canvas" width = "840" height = "840" style="border: 1px solid black; background-color: black; margin-right: 30px;"></canvas>
+        <p id="needs-training-display" style="color: red">NETWORK HAS NOT BEEN TRAINED</p>
+    </div>
+    <p></p><!-- scuffed line spacing -->
     <div id="buttons-div">
         <button id="button">calculate number</button>
         <button id="clear">reset canvas</button>
@@ -36,8 +40,6 @@
     <script defer src="test_data.js"></script>
     <script defer src="main.js"></script>
     <script defer src="backpropagation.js"></script>
-
-    <div id="status-update"></div>
 </body>
 
 </html>

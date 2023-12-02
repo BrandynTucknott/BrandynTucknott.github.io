@@ -48,7 +48,7 @@ function readLabelData(buffer)
     trainingNumItems = dataview.getInt32(4);
 
     trainingLabelArray = Array.from({length: BATCH_SIZE}, () => -100);
-    let offset = 8 // 2 4-byte numbers: magic num, num items
+    let offset = 8; // 2 4-byte numbers: magic num, num items
 
     // for all images
     for (let im = 0; im < BATCH_SIZE; im++)
@@ -67,7 +67,9 @@ function readImageData(buffer)
 
     // [0-3] = magic number: 4 byte integer
     // [4 - 7] = number of items: 4 byte integer
-    let offset = 8;
+    // [8 - 11] = num rows: 4 byte integer
+    // [12 - 15] = num columns: 4 byte integer
+    let offset = 16;
     // for all images
     for (let im = 0; im < BATCH_SIZE; im++) // TODO: restore trainingNumItems
     {
@@ -90,6 +92,12 @@ function readImageData(buffer)
 */
 async function processTrainingData(initImageCallback, initLabelCallback)
 {
+    startToHidden1Weights = Array.from({length: 16}, () => Array.from({length: 784}, () => Math.random() * 2 - 1));
+    hidden1ToHidden2Weights = Array.from({length: 16}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
+    hidden2ToOutputWeights = Array.from({length: 10}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
+    hidden1Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
+    hidden2Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
+    outputBiases = Array.from({length: 10}, () => Math.random() * 2 - 1);
     // intent is for callback1 to happen, then callback2, then rest of this function
     await initImageCallback(); // initImageReader
     await initLabelCallback(); // initLabelReader
@@ -157,56 +165,13 @@ async function processTrainingData(initImageCallback, initLabelCallback)
             hiddenLayer2.length * outputLayer.length + 
             hidden1Biases.length + hidden2Biases.length + outputBiases.length
         }, () => 0);
-    // ============================================================================================================================
-    // ============================================================================================================================
-    // redundant code I will fix later: happened as a result of how callback functions work =======================================
-    // for (let num = 0; num < BATCH_SIZE; num++)
-    // {
-    //     // read all pixels in 1 training image
-    //     for (let i = 0; i < 28 * 28; i++)
-    //     {
-    //         startLayer[i] = activationPercent(trainingImageArray[784 * num + i]);
-    //     }
-    //     // calculate all layers: get an untrained output
-    //     hiddenLayer1 = weightedSum(startToHidden1Weights, startLayer, hidden1Biases);
-    //     hiddenLayer2 = weightedSum(hidden1ToHidden2Weights, hiddenLayer1, hidden2Biases);
-    //     outputLayer = weightedSum(hidden2ToOutputWeights, hiddenLayer2, outputBiases);
 
-    //     // console.log('before backprop');
-    //     // testForNaN();
-
-    //     desired_output = Array.from({length: outputLayer.length}, () => 0); // desired output vector; init to all 0
-    //     desired_output[trainingLabelArray[num]] = trainingLabelArray[num]; // label what the correct output should have been
-
-    //     // make appropriate changes to the gradient of the cost
-    //     propogateBackwards(2, cost_gradient, desired_output) // TODO: call propogate backwards wtih correct input
-    //     // console.log('after backprop');
-    //     // testForNaN();
-    // }
-    // // avg the cost_gradient(addition done in loop above; all that remains is division)
-    // cost_gradient = cost_gradient.map(val => val / BATCH_SIZE);
-    // // error correct the untrained output and modify all the "13,002 knobs" using the cost_gradient
-    // modifyWeightsAndBiases(cost_gradient);
-    // // console.log('after modification');
-    // // testForNaN();
-    // NUM_BATCHES_READ = 1;
-    // status_update_div.innerText = 'processed batch ' + NUM_BATCHES_READ + ' of ' + NUM_BATCHES_TO_READ;
-    // console.log('processed batch ' + NUM_BATCHES_READ + ' of ' + NUM_BATCHES_TO_READ);
-    // end of redundant code ============================================================================================
-    // ==================================================================================================================
-    // ==================================================================================================================
-
-
-
-
-
-
-    
+    // read all data in batches of BATCH_SIZE
     while (NUM_BATCHES_READ < NUM_BATCHES_TO_READ)
     {
         readLabelData(label_buffer);
         readImageData(img_buffer);
-        // for each number in the batch
+        // for each training number in the batch
         for (let num = 0; num < BATCH_SIZE; num++)
         {
             // read all its pixels
@@ -219,25 +184,17 @@ async function processTrainingData(initImageCallback, initLabelCallback)
             hiddenLayer2 = weightedSum(hidden1ToHidden2Weights, hiddenLayer1, hidden2Biases);
             outputLayer = weightedSum(hidden2ToOutputWeights, hiddenLayer2, outputBiases);
 
-            // console.log('before backprop');
-            // testForNaN();
-
             desired_output = Array.from({length: outputLayer.length}, () => 0); // desired output vector; init to all 0
             desired_output[trainingLabelArray[num]] = trainingLabelArray[num]; // label what the correct output should have been
 
             // make appropriate changes to the gradient of the cost
             propogateBackwards(2, cost_gradient, desired_output) // TODO: call propogate backwards wtih correct input
-            // console.log('after backprop');
-            // testForNaN();
         }
         // avg the cost_gradient(addition done in loop above; all that remains is division)
         cost_gradient = cost_gradient.map(val => val / BATCH_SIZE);
         // error correct the untrained output and modify all the "13,002 knobs" using the cost_gradient
         modifyWeightsAndBiases(cost_gradient);
-        // console.log('after modification');
-        // testForNaN();
         NUM_BATCHES_READ++;
-        status_update_div.innerText = 'processed batch ' + NUM_BATCHES_READ + ' of ' + NUM_BATCHES_TO_READ;
         console.log('processed batch ' + NUM_BATCHES_READ + ' of ' + NUM_BATCHES_TO_READ);
     }
     trainingDataComplete = true;

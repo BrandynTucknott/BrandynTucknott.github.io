@@ -77,9 +77,13 @@ retrain.addEventListener('click', () =>
 {
     let userConfirmedRetrain = confirm(
         `Are you sure you want to retrain the network?
-        \nThis will take several minutes, and the accuracy is not guaranteed to go up.
+        \nThis may take several minutes, and accuracy is not guaranteed to go up.
         \nOpen inspect element before retraining to view progress.`
     );
     if (userConfirmedRetrain)
+    {
+        needs_training_display_p.style.color = 'red';
+        needs_training_display_p.innerText = 'Currently Training...';
         processTrainingData(initImageReader, initLabelReader);
+    }
 });

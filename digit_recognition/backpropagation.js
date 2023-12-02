@@ -89,38 +89,28 @@ function propogateBackwards(layerIndex, cost_gradient, desired_output)
     2: output --> hidden 2
     */
     // select current layer based on layerIndex
-    let layer = determineLayer(layerIndex);
-    for (let j = 0; j < layer.length; j++)
-    {
-        if (isNaN(layer[j]))
-        {
-            console.log('layer[' + j + '] is NaN: layer ' + layerIndex);
-            return;
-        }
-    }
-    let previousLayer = determinePreviousLayer(layerIndex);
-    let weights = determineLayerWeights(layerIndex);
-    let biases = determineLayerBiases(layerIndex);
+    let layer = determineLayer(layerIndex); // current later activation
+    let previousLayer = determinePreviousLayer(layerIndex); // prev layer activation
+    let weights = determineLayerWeights(layerIndex); // weights connecting previous to current layer
+    let biases = determineLayerBiases(layerIndex); // biases on the current layer
 
     const BIASES_START_INDEX = determineStartIndexOfBiasesInGradient(layerIndex);
     const WEIGHTS_START_INDEX = determineStartIndexOfWeightsInGradient(layerIndex);
 
     // partial derivative of cost with respect to activation neuron for all neurons in this layer
+
     let partialCost_partialActivation = Array.from({length: layer.length}, () => 0);
     // partial derivative of activation neurons with respect to weighted sum of previous layer feeding into current neuron
     let partialActivation_partialZ = Array.from({length: layer.length}, () => 0);
     let z = biases.map(bias => bias);
-    // partial derivative of Z with respect to Activation neurons
-    let partialZ_partialActivation = Array.from({length: previousLayer.length}, () => 0);
 
     // fill in the arrays with partial derivatives
     for (let j = 0; j < layer.length; j++)
     {
-        partialCost_partialActivation[j] += layer[j] - desired_output[j];
-        if (isNaN(partialCost_partialActivation[j]))
+        partialCost_partialActivation = 2 * (layer[j] - desired_output[j]);
+        if (isNaN(partialCost_partialActivation))
         {
-            console.log(layer[j],desired_output[j]);
-            console.log('partialCost_partialActivation[' + j + '] is NaN: layer ' + layerIndex);
+            console.log('partialCost_partialActivation is NaN: layer ' + layerIndex);
             return;
         }
 
@@ -132,12 +122,6 @@ function propogateBackwards(layerIndex, cost_gradient, desired_output)
                 console.log('z[' + j + '] at k = ' + k + ' is NaN: layer ' + layerIndex);
                 return;
             }
-            partialZ_partialActivation[k] += weights[j][k];
-            if (isNaN(partialZ_partialActivation[k]))
-            {
-                console.log('partialZ_partialActivation[' + k + '] at j = ' + j + ' is NaN: layer ' + layerIndex);
-                return;
-            }
         }
         partialActivation_partialZ[j] = sigmoidDerivative(z[j]);
         if (isNaN(partialActivation_partialZ[j]))
@@ -145,38 +129,42 @@ function propogateBackwards(layerIndex, cost_gradient, desired_output)
             console.log('partialActivation_partialZ[' + j + '] is NaN: layer ' + layerIndex);
             return;
         }
-    }
-    partialCost_partialActivation = partialCost_partialActivation.map(val => val * 2);
+    } // end of filling arrays
 
     
     // PART I: add to gradient for weights and biases =================
     // go through and mark a change in the cost_gradient for each bias
+    desired_output = [];
     for (let j = 0; j < biases.length; j++)
     {
         // mark down change to each bias
-        cost_gradient[BIASES_START_INDEX + j] += partialCost_partialActivation[j] * partialActivation_partialZ[j];
+        let partialCost_partialBias = partialCost_partialActivation * partialActivation_partialZ[j]
+        cost_gradient[BIASES_START_INDEX + j] += partialCost_partialBias;
         if (isNaN(cost_gradient[BIASES_START_INDEX + j]))
         {
-            console.log('B: cost_gradient[' + (BIASES_START_INDEX + j) + '] is NaN: tried to add ' + (partialCost_partialActivation[j] * partialActivation_partialZ[j]));
+            console.log('B: cost_gradient[' + (BIASES_START_INDEX + j) + '] is NaN: tried to add ' + (partialCost_partialActivation * partialActivation_partialZ[j]));
             return;
         }
 
         // mark down change to each weight
         for (let k = 0; k < previousLayer.length; k++)
         {
-            cost_gradient[WEIGHTS_START_INDEX + j * previousLayer.length + k] += partialCost_partialActivation[j] * partialActivation_partialZ[j] * previousLayer[k];
+            // effectively partialCost_partialWeight
+            cost_gradient[WEIGHTS_START_INDEX + j * previousLayer.length + k] += partialCost_partialActivation * partialActivation_partialZ[j] * previousLayer[k];
             if (isNaN(cost_gradient[WEIGHTS_START_INDEX + j * previousLayer.length + k]))
             {
-                console.log('W: cost_gradient[' + (WEIGHTS_START_INDEX + j * previousLayer.length + k) + '] is NaN: tried to add ' + partialCost_partialActivation[j] + ' * ' + partialActivation_partialZ[j] + ' * ' + previousLayer[k]);
-            } 
+                console.log('W: cost_gradient[' + (WEIGHTS_START_INDEX + j * previousLayer.length + k) + '] is NaN: tried to add ' + partialCost_partialActivation + ' * ' + partialActivation_partialZ[j] + ' * ' + previousLayer[k]);
+            }
+            let partialCost_partialPreviousLayerActivation = 0;
+            for (let temp_j = 0; temp_j < layer.length; temp_j++)
+            {
+                partialCost_partialPreviousLayerActivation += partialCost_partialActivation * partialActivation_partialZ[temp_j] * weights[temp_j][k];
+            }
+            desired_output[k] = partialCost_partialPreviousLayerActivation;
         }
     }
 
-    desired_output = structuredClone(partialZ_partialActivation);
-    temp_cost_gradient = structuredClone(cost_gradient);
-
     // PART II: change previous layer activation (recursive step)
-    // recalculate desired_output vector: this is complete; it is partialZ_partialActivation
     propogateBackwards(layerIndex - 1, cost_gradient, desired_output);
 }
 
@@ -185,45 +173,45 @@ function modifyWeightsAndBiases(cost_gradient)
 {
     let cost_gradient_index = 0;
     // change all weights from start layer --> hidden 1
-    for (let next_layer_neuron = 0; next_layer_neuron < startToHidden1Weights.length; next_layer_neuron++)
+    for (let j = 0; j < startToHidden1Weights.length; j++)
     {
-        for (let layer_neuron = 0; layer_neuron < startToHidden1Weights[next_layer_neuron].length; layer_neuron++)
+        for (let k = 0; k < startToHidden1Weights[j].length; k++)
         {
-            startToHidden1Weights[next_layer_neuron][layer_neuron] += cost_gradient[cost_gradient_index];
+            startToHidden1Weights[j][k] += cost_gradient[cost_gradient_index];
             cost_gradient_index++;
         }
     }
 
     // change all weights from hidden 1 --> hidden 2
-    for (let next_layer_neuron = 0; next_layer_neuron < hidden1ToHidden2Weights.length; next_layer_neuron++)
+    for (let j = 0; j < hidden1ToHidden2Weights.length; j++)
     {
-        for (let layer_neuron = 0; layer_neuron < hidden1ToHidden2Weights[next_layer_neuron].length; layer_neuron++)
+        for (let k = 0; k < hidden1ToHidden2Weights[j].length; k++)
         {
-            hidden1ToHidden2Weights[next_layer_neuron][layer_neuron] += cost_gradient[cost_gradient_index];
+            hidden1ToHidden2Weights[j][k] += cost_gradient[cost_gradient_index];
             cost_gradient_index++;
         }
     }
 
     // change all weights from hidden 2 --> output layer
-    for (let next_layer_neuron = 0; next_layer_neuron < hidden2ToOutputWeights.length; next_layer_neuron++)
+    for (let j = 0; j < hidden2ToOutputWeights.length; j++)
     {
-        for (let layer_neuron = 0; layer_neuron < hidden2ToOutputWeights[next_layer_neuron].length; layer_neuron++)
+        for (let k = 0; k < hidden2ToOutputWeights[j].length; k++)
         {
-            hidden2ToOutputWeights[next_layer_neuron][layer_neuron] += cost_gradient[cost_gradient_index];
+            hidden2ToOutputWeights[j][k] += cost_gradient[cost_gradient_index];
             cost_gradient_index++;
         }
     }
     // change all biases from start --> hidden 1
-    for (let bias = 0; bias < hidden1Biases.length; bias++)
+    for (let j = 0; j < hidden1Biases.length; j++)
     {
-        hidden1Biases[bias] += cost_gradient[cost_gradient_index];
+        hidden1Biases[j] += cost_gradient[cost_gradient_index];
         cost_gradient_index++;
     }
 
     // change all biases from hidden 1 --> hidden 2
-    for (let bias = 0; bias < hidden2Biases.length; bias++)
+    for (let j = 0; j < hidden2Biases.length; j++)
     {
-        hidden2Biases[bias] += cost_gradient[cost_gradient_index];
+        hidden2Biases[j] += cost_gradient[cost_gradient_index];
         cost_gradient_index++;
     }
 

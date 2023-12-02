@@ -16,15 +16,16 @@ let hidden2Biases = []; // 16 elements
 let outputBiases = []; // 10 elements
 
 // ==================== initialize weights + biases randomly at creation ==========================
-startToHidden1Weights = Array.from({length: 16}, () => Array.from({length: 784}, () => Math.random() * 2 - 1));
-hidden1ToHidden2Weights = Array.from({length: 16}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
-hidden2ToOutputWeights = Array.from({length: 10}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
-hidden1Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
-hidden2Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
-outputBiases = Array.from({length: 10}, () => Math.random() * 2 - 1);
+// startToHidden1Weights = Array.from({length: 16}, () => Array.from({length: 784}, () => Math.random() * 2 - 1));
+// hidden1ToHidden2Weights = Array.from({length: 16}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
+// hidden2ToOutputWeights = Array.from({length: 10}, () => Array.from({length: 16}, () => Math.random() * 2 - 1));
+// hidden1Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
+// hidden2Biases = Array.from({length: 16}, () => Math.random() * 2 - 1);
+// outputBiases = Array.from({length: 10}, () => Math.random() * 2 - 1);
 
 // ==================== input training files ==================
 // implement stochastic gradient descent: note 60,000 training data values: read 600 batches
+// global variables to make my life easier while trying to implement this for this first time
 const BATCH_SIZE = 100;
 let NUM_BATCHES_READ = 0;
 

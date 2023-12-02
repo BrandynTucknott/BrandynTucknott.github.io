@@ -65,8 +65,8 @@ function readTestImageData(buffer)
 
     testImageArray = Array.from({length: 28 * 28 * BATCH_SIZE}, () => -100);
 
-    // 2 4-byte nums at beginning: magic num, num of items
-    let offset = 8;
+    // 4 4-byte nums at beginning: magic num, num of items
+    let offset = 16;
     // for all images
     for (let im = 0; im < BATCH_SIZE; im++) // TODO: restore trainingNumItems
     {
@@ -98,32 +98,7 @@ async function processTestData(initImageCallback, initLabelCallback)
 
     let num_correct = 0;
 
-    // ============================================================================================================================
-    // ============================================================================================================================
-    // redundant code I will fix later: happened as a result of how callback functions work =======================================
-    // for (let num = 0; num < BATCH_SIZE; num++)
-    // {
-    //     // read all pixels in 1 training image
-    //     for (let i = 0; i < 28 * 28; i++)
-    //     {
-    //         startLayer[i] = activationPercent(testImageArray[784 * num + i]);
-    //     }
-    //     // calculate all layers: get an untrained output
-    //     hiddenLayer1 = weightedSum(startToHidden1Weights, startLayer, hidden1Biases);
-    //     hiddenLayer2 = weightedSum(hidden1ToHidden2Weights, hiddenLayer1, hidden2Biases);
-    //     outputLayer = weightedSum(hidden2ToOutputWeights, hiddenLayer2, outputBiases);
-
-    //     if (testLabelArray[num] == max())
-    //     {
-    //         num_correct++;
-    //     }
-    // }
-    // NUM_BATCHES_READ++;
-    // console.log('processed test batch ' + NUM_BATCHES_READ + ' of ' + NUM_BATCHES_TO_READ);
-    // end of redundant code ============================================================================================
-    // ==================================================================================================================
-    // ==================================================================================================================
-
+    // read all data in batches of BATCH_SIZE
     while (NUM_BATCHES_READ < NUM_BATCHES_TO_READ)
     {
         readTestLabelData(label_buffer);
@@ -153,7 +128,10 @@ async function processTestData(initImageCallback, initLabelCallback)
 
     console.log('Network has a ' + accuracy + '% accuracy');
     if (accuracy > networkAccuracy)
-        overrideSavedData(accuracy)
+        overrideSavedData(accuracy);
+
+    needs_training_display_p.style.color = 'green';
+    needs_training_display_p.innerText = 'Network is Trained';
 }
 
 function overrideSavedData(accuracy)
