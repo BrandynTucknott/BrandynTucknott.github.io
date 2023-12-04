@@ -79,7 +79,7 @@ function readGrid()
     {
         for (let c = 0; c < 28; c++)
         {
-            layer[28 * r + c] = activationPercent(grid[c][r].rgbNum); // to organize it by rows
+            layer[28 * r + c] = activationPercent(grid[r][c].rgbNum); // to organize it by rows
         }
     }
 
@@ -103,41 +103,3 @@ function max()
 
     return max_index;
 }
-
-async function initSavedDataReader()
-{
-    const promise = await fetch('network_info.txt');
-    const blob = await promise.blob();
-    const reader = new FileReader();
-    
-    reader.onload = function() { saved_data_buffer = this.result }
-
-    return new Promise(function(resolve, reject)
-    {
-        reader.onloadend = function(e)
-        {
-            readSavedData(saved_data_buffer);
-            resolve();
-        };
-        reader.readAsText(blob);
-    });
-}
-
-function readSavedData(buffer)
-{
-    const array = buffer.split(/\r\n|\n/); // array of strings
-    let vals = []; // stores the 13002 weights and biases
-
-    // read the data from the .txt file and use it in program
-    if (isNaN(parseFloat(array[0]))) // no data in .txt
-        return;
-    networkAccuracy = parseFloat(array[0]);
-
-    for (let i = 1; i < array.length; i++)
-    {
-        vals[i - 1] = parseInt(array[i]);
-    }
-
-    modifyWeightsAndBiases(vals);
-}
-

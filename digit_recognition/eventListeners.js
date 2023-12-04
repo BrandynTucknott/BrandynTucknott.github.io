@@ -63,6 +63,12 @@ canvas.addEventListener("mousedown", function(down)
 // registers if a button has been pressed
 button.addEventListener("click", function(click)
 {
+    if (!trainingDataComplete)
+    {
+        button_press_messages_p.innerText = 'you must train the network before computing';
+        return;
+    }
+    button_press_messages_p.innerText = '';
     readUserInput();
 });
 

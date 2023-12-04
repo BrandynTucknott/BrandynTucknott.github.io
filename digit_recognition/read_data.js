@@ -71,7 +71,7 @@ function readImageData(buffer)
     // [12 - 15] = num columns: 4 byte integer
     let offset = 16;
     // for all images
-    for (let im = 0; im < BATCH_SIZE; im++) // TODO: restore trainingNumItems
+    for (let im = 0; im < BATCH_SIZE; im++)
     {
         // get all of their pixels
         for (let r = 0; r < 28; r++)
@@ -80,7 +80,6 @@ function readImageData(buffer)
             {
                 // store the pixels
                 trainingImageArray[784 * im + 28 * r + c] = dataview.getUint8(NUM_BATCHES_READ * BATCH_SIZE + offset + 28 * r + c);
-                offset++;
             }
         }
     }
@@ -102,8 +101,8 @@ async function processTrainingData(initImageCallback, initLabelCallback)
     await initImageCallback(); // initImageReader
     await initLabelCallback(); // initLabelReader
 
-    const NUM_BATCHES_TO_READ = trainingNumItems / BATCH_SIZE;
-    // const NUM_BATCHES_TO_READ = 3;
+    // const NUM_BATCHES_TO_READ = trainingNumItems / BATCH_SIZE;
+    const NUM_BATCHES_TO_READ = 3;
 
     /*
     784 * 16 start layer --> hidden layer 1
@@ -188,7 +187,7 @@ async function processTrainingData(initImageCallback, initLabelCallback)
             desired_output[trainingLabelArray[num]] = trainingLabelArray[num]; // label what the correct output should have been
 
             // make appropriate changes to the gradient of the cost
-            propogateBackwards(2, cost_gradient, desired_output) // TODO: call propogate backwards wtih correct input
+            propogateBackwards(2, cost_gradient, desired_output)
         }
         // avg the cost_gradient(addition done in loop above; all that remains is division)
         cost_gradient = cost_gradient.map(val => val / BATCH_SIZE);

@@ -33,16 +33,11 @@ function fillSquare(gridX, gridY)
     if ((gridX < 0 || gridX > 27) || (gridY < 0 || gridY > 27))
         return; // square is out of bounds
     
-    const square = grid[gridX][gridY];
+    const square = grid[gridY][gridX];
     const fillColor = `rgb(${square.rgbNum}, ${square.rgbNum}, ${square.rgbNum})`
     context.fillStyle = fillColor;
 
-    if (!square.white)
-    {
-        context.fillRect(box_dim * gridX, box_dim * gridY, box_dim, box_dim);
-        if (fillColor == "rgb(255, 255, 255)")
-            square.white = true;
-    }
+    context.fillRect(box_dim * gridX, box_dim * gridY, box_dim, box_dim);
 }
 
 // generates a grayscale random color depending on the input speed
@@ -51,7 +46,7 @@ function generateAndSetColor(gridX, gridY, speed)
     if ((gridX < 0 || gridX > 27) || (gridY < 0 || gridY > 27))
         return; // square is out of bounds
     
-    const square = grid[gridX][gridY];
+    const square = grid[gridY][gridX];
     
     const n = 255 - Math.floor(Math.random() * (255 / 4 * (1 - Math.exp(-speed)) + 1) + 255 * Math.exp(-speed) * Math.atan(speed) * 2 / Math.PI);
     
@@ -64,7 +59,7 @@ function fill3x3(gridX, gridY, speed)
     if (!hasChangedBoard)
         hasChangedBoard = true;
     // only fill squares if the cursor has moved to a new square
-    const square = grid[gridX][gridY];
+    const square = grid[gridY][gridX];
     if (previousSquare == square)
     {
        return;

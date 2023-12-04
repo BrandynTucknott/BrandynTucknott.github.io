@@ -40,74 +40,20 @@ let testLabelArray = [];
 
 let img_buffer;
 let label_buffer;
-let saved_data_buffer;
 
 let trainingDataComplete = false;
 
-let networkAccuracy = -1;
-initSavedDataReader();
-
-function containsNaN(array)
+function drawImage(index)
 {
-    for (let i = 0; i < array.length; i++)
+    const offset = index * 784;
+    for (let r = 0; r < 28; r++)
     {
-        if (isNaN(array[i]))
+        for (let c = 0; c < 28; c++)
         {
-            // console.log('NaN at index ' + i);
-            return true;
+            const numToSet = trainingImageArray[offset + 28 * r + c];
+            grid[r][c].rgbNum = numToSet;
+            fillSquare(c, r);
         }
     }
-    return false;
-}
-function testForNaN()
-{
-    console.log('BEGIN TEST FOR NaN');
-    // test biases
-    if (containsNaN(hidden1Biases))
-        console.log('hidden 1 biases contain NaN');
-    if (containsNaN(hidden2Biases))
-        console.log('hidden 2 biases contain NaN');
-    if (containsNaN(outputBiases))
-        console.log('output biases contain NaN');
-
-    // test weights
-    for (let i = 0; i < startToHidden1Weights; i++)
-    {
-        if (containsNaN(startToHidden1Weights[i]))
-        {
-            console.log('start --> hidden 1 weights contains NaN');
-            break;
-        }
-    }
-    for (let i = 0; i < hidden1ToHidden2Weights; i++)
-    {
-        if (containsNaN(hidden1ToHidden2Weights[i]))
-        {
-            console.log('hidden 1 --> hidden 2 weights contains NaN');
-            break;
-        }
-    }
-    for (let i = 0; i < hidden2ToOutputWeights; i++)
-    {
-        if (containsNaN(hidden2ToOutputWeights[i]))
-        {
-            console.log('hidden 2 --> output weights contains NaN');
-            break;
-        }
-    }
-
-    // test layers
-    if (containsNaN(startLayer))
-        console.log('start layer contains NaN');
-    if (containsNaN(hiddenLayer1))
-        console.log('hidden 1 layer contains NaN');
-    if (containsNaN(hiddenLayer2))
-        console.log('hidden 2 layer contains NaN');
-    if (containsNaN(outputLayer))
-        console.log('output layer contains NaN');
-
-    if (containsNaN(temp_cost_gradient))
-        console.log('cost_gradient contains NaN');
-
-    console.log('END TEST FOR NaN');
+    console.log('should be ' + trainingLabelArray[index]);
 }

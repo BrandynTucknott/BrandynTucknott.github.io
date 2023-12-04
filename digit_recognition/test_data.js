@@ -68,7 +68,7 @@ function readTestImageData(buffer)
     // 4 4-byte nums at beginning: magic num, num of items
     let offset = 16;
     // for all images
-    for (let im = 0; im < BATCH_SIZE; im++) // TODO: restore trainingNumItems
+    for (let im = 0; im < BATCH_SIZE; im++)
     {
         // get all of their pixels
         for (let r = 0; r < 28; r++)
@@ -77,13 +77,10 @@ function readTestImageData(buffer)
             {
                 // store the pixels
                 testImageArray[784 * im + 28 * r + c] = dataview.getUint8(NUM_BATCHES_READ * BATCH_SIZE + offset + 28 * r + c);
-                offset++;
             }
         }
     }
 }
-
-
 
 
 
@@ -92,8 +89,8 @@ async function processTestData(initImageCallback, initLabelCallback)
     await initImageCallback();
     await initLabelCallback();
 
-    const NUM_BATCHES_TO_READ = testNumItems / BATCH_SIZE;
-    // const NUM_BATCHES_TO_READ = 3;
+    // const NUM_BATCHES_TO_READ = testNumItems / BATCH_SIZE;
+    const NUM_BATCHES_TO_READ = 3;
     NUM_BATCHES_READ = 0;
 
     let num_correct = 0;
@@ -127,24 +124,7 @@ async function processTestData(initImageCallback, initLabelCallback)
     let accuracy = num_correct / testNumItems * 100;
 
     console.log('Network has a ' + accuracy + '% accuracy');
-    if (accuracy > networkAccuracy)
-        overrideSavedData(accuracy);
 
     needs_training_display_p.style.color = 'green';
     needs_training_display_p.innerText = 'Network is Trained';
-}
-
-function overrideSavedData(accuracy)
-{
-    return; // remove this eventually
-    const fs = require('fs');
-    const content = 'test content';
-    fs.writeFile('network_info.txt', content, (err) =>
-    {
-        if (err)
-        {
-            console.error(err);
-            return;
-        }
-    });
 }

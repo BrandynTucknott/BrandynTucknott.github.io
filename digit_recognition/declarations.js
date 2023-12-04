@@ -5,6 +5,7 @@ const clear = document.getElementById('clear');
 const retrain = document.getElementById('retrain');
 const answerBox = document.getElementById("output");
 const needs_training_display_p = document.getElementById('needs-training-display');
+const button_press_messages_p = document.getElementById('button-press-messages');
 
 // makes the whole canvas dependent on the box_dim
 const box_dim = 20; // dimension (px) of a single box in the grid
