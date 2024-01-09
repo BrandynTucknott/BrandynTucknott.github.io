@@ -79,7 +79,7 @@ function readImageData(buffer)
             for (let c = 0; c < 28; c++)
             {
                 // store the pixels
-                trainingImageArray[784 * im + 28 * r + c] = dataview.getUint8(NUM_BATCHES_READ * BATCH_SIZE + offset + 28 * r + c);
+                trainingImageArray[784 * im + 28 * r + c] = dataview.getUint8(NUM_BATCHES_READ * BATCH_SIZE + offset + 28 * r + c + 784 * im);
             }
         }
     }
@@ -101,8 +101,8 @@ async function processTrainingData(initImageCallback, initLabelCallback)
     await initImageCallback(); // initImageReader
     await initLabelCallback(); // initLabelReader
 
-    // const NUM_BATCHES_TO_READ = trainingNumItems / BATCH_SIZE;
-    const NUM_BATCHES_TO_READ = 3;
+    const NUM_BATCHES_TO_READ = trainingNumItems / BATCH_SIZE;
+    // const NUM_BATCHES_TO_READ = 3;
 
     /*
     784 * 16 start layer --> hidden layer 1

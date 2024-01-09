@@ -53,6 +53,7 @@ function readTestLabelData(buffer)
     for (let im = 0; im < BATCH_SIZE; im++)
     {
         // im + 5 = offset
+        // console.log("read label data index: ",NUM_BATCHES_READ * BATCH_SIZE + im + offset);
         testLabelArray[im] = dataview.getUint8(NUM_BATCHES_READ * BATCH_SIZE + im + offset);
     }
 }
@@ -89,8 +90,8 @@ async function processTestData(initImageCallback, initLabelCallback)
     await initImageCallback();
     await initLabelCallback();
 
-    // const NUM_BATCHES_TO_READ = testNumItems / BATCH_SIZE;
-    const NUM_BATCHES_TO_READ = 3;
+    const NUM_BATCHES_TO_READ = testNumItems / BATCH_SIZE;
+    // const NUM_BATCHES_TO_READ = 3;
     NUM_BATCHES_READ = 0;
 
     let num_correct = 0;
