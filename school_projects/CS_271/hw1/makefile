@@ -1,3 +1,6 @@
-make: main.asm
-	nasm -g -f elf main.asm
-	ld -g -m elf_i386 -o main
+main: main.asm
+	nasm main.asm -g -f elf
+	ld main.o -g -m elf_i386 -o main
+
+clear:
+	rm *.o main
