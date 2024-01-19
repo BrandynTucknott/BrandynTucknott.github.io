@@ -98,28 +98,35 @@ get_user_int:
 ;           EX: 345 --> 3*10^2 + 4*10 + 5
 str_to_int:
     ; clear vals before use
-    xor [temp_int], [temp_int]
+    xor eax, [temp_int]
     xor eax, eax
     xor ebx, ebx
     xor ecx, ecx
     xor edx, edx
     loop:
-        mov dl, [esi + bl] ; move char
-        sub byte [dl], 0x30 ; convert from ascii to int
+        ;mov dl, byte ptr [esi + bl] ; move char
+        mov al, byte ptr [esi]
+        add al, bl
+        mov dl, al
+        sub dl, 0x30 ; convert from ascii to int
 
-        inc byte eax ; eax = 1, get ready to start multiplying by 10
-        mov ecx, 0x0A
+        mov eax, 0x01, ; get ready to start multiplying by 10
+        ;mov ecx, 0x0A
         xor dh, dh ; reset dh
+        mov ecx, edi
         subloop: ; calculates 10^([edi] - bl - 1) (in eax)
-            cmp ([edi] - bl - 1), dh ; continue looping?
-            je end_subloop ; no
+            sub dword ecx, bl - 1
+            cmp ecx, dh
+            ;cmp byte (edi - bl - 0x01), dh ; continue looping?
+            je out_of_subloop ; no
             ; yes, continue looping
+            mov ecx, 0x0A
             mul ecx
             inc byte dh ; increment loop index
             jmp subloop
 
-    end_subloop:
-        mov byte ecx, dl
+    out_of_subloop:
+        movzx  ecx, dl
         mul ecx ; multiply eax by ecx and store result in eax
         add qword [temp_int], eax
         inc byte bl ; increment current index
@@ -180,7 +187,13 @@ _start:
     mov esi, width_prompt
     mov edi, width_prompt_len
     call write
-    call get_user_int
+    call get_user_int ; user num now in int_buffer as str
+    call str_to_int ; convert str to int and store int temp_int
+    mov [width], [temp_int] ; store number version of user input
+
+    mov eax, 1 ; REMOVE THIS
+    mov ebx, [width] ; REMOVE
+    int 0x80 ; REMOVE
 
     ; store gotten width
     mov esi, int_buffer
