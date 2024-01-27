@@ -1,8 +1,9 @@
 import numpy as np
 import time
+import heapq # used to speed up get_nearest_neighbors
+# import threading # TODO: speed up with multi-threading
 
 def main():
-
     #############################################################
     # These first bits are just to help you develop your code
     # and have expected ouputs given. All asserts should pass.
@@ -61,31 +62,44 @@ def main():
     # Now on to the real data!
     #######################################
 
-    # Load training and test data as numpy matrices 
+    # Load training and test data as numpy matrices
     train_X, train_y, test_X = load_data()
-
+    # print("train_X:", len(train_X), "x", len(train_X[0])) 
+    # print("train_y:", len(train_y), "x", len(train_y[0]))
+    # print("test_X:", len(test_X), "x", len(test_X[0]))
+    # train_X = 8000 x 85 - 8000 column vectors: training vectors
+    # train_y = 8000 x 1 - 8000 income classes: income class vectors
+    # test_X = 2000 x 85 - 2000 column vectors: test vectors with no answers (Kaggle set?)
 
     #######################################
     # Q9 Hyperparmeter Search
     #######################################
 
-    # Search over possible settings of k
+    # Search over possible settings of k (for cross-validation model)
+    best_k, k_acc = 0, 0
     print("Performing 4-fold cross validation")
     for k in [1,3,5,7,9,99,999,8000]:
-      t0 = time.time()
+        t0 = time.time()
 
-      #######################################
-      # TODO Compute train accuracy using whole set
-      #######################################
-      train_acc = 0 
+        #######################################
+        # DONE Compute train accuracy using whole set
+        #######################################
+        guesses = predict(train_X, train_y, train_X, k)
+        train_acc = compute_accuracy(train_y, guesses)
+        # train_acc = -1
 
-      #######################################
-      # TODO Compute 4-fold cross validation accuracy
-      #######################################
-      val_acc, val_acc_var = 0,0
-      
-      t1 = time.time()
-      print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
+        #######################################
+        # DONE Compute 4-fold cross validation accuracy
+        #######################################
+        val_acc, val_acc_var = 0,0
+        # val_acc, val_acc_var = cross_validation(train_X, train_y, 4, k)
+        # setting best k
+        if (train_acc > k_acc):
+            best_k = k
+            k_acc = train_acc
+        
+        t1 = time.time()
+        print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
     
     #######################################
 
@@ -96,10 +110,10 @@ def main():
 
 
     # TODO set your best k value and then run on the test set
-    best_k = 1
+    # best_k = 1
 
     # Make predictions on test set
-    pred_test_y = predict(train_X, train_y, test_X, best_k)    
+    pred_test_y = predict(train_X, train_y, test_X, best_k)
     
     # add index and header then save to file
     test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=np.int), axis=1), pred_test_y), axis=1)
@@ -127,13 +141,32 @@ def main():
 #   k --        the number of neighbors to return
 #
 # Output:
-#   idx_of_nearest --   a k-by- list of indices for the nearest k
+#   idx_of_nearest --   a k-by-1 list of indices for the nearest k
 #                       neighbors of the query point
 ######################################################################
 
 def get_nearest_neighbors(example_set, query, k):
-    #TODO
-    return idx_of_nearest  
+    # use a max-heap to speed up (hopefully) the speed at which comparing
+    # distance from query -> point with 
+    # distance from current closest neighbors -> query
+    heap = []
+
+    data = example_set - query # Matrix - vector: speed up
+    # for each vector in example_set
+    for vec_idx in range(0, len(data)):
+        # check the distance between the vector and query (L2_norm)
+        d = np.linalg.norm(data[vec_idx])
+
+        # next line is chatGPT code because it was taking me a few minutes without it to do the k = 1 case
+        # chatGPT referenced to learn about heapq structure
+        # -d: very positive --> very negative; little positive --> little negative
+        if len(heap) < k:
+            heapq.heappush(heap, (-d, vec_idx)) # -d turns heap from min-heap to max-heap
+        elif d < -heap[0][0]: # heap[0][0] -> 
+            heapq.heappushpop(heap, (-d, vec_idx))
+
+    indicies = [i for (_, i) in heap]
+    return indicies 
 
 
 ######################################################################
@@ -157,8 +190,22 @@ def get_nearest_neighbors(example_set, query, k):
 ######################################################################
 
 def knn_classify_point(examples_X, examples_y, query, k):
-    #TODO
-    return predicted_label
+    # array of the indicies of the k nearest neighbors to query
+    knn = get_nearest_neighbors(examples_X, query, k)
+
+    # since around 75% of the data appears to belong to < 50k, assume all nearest neighbors belong to class 0 and
+    # count the number of points which are not in class 0 (in class 1)
+
+    # the next line of code is equivalent to the following, but faster (bc of matrix operations in numpy)
+    # num_of_class_1 = 0
+    # for i in range(0, k):
+    #     num_of_class_1 += examples_y[knn[i]]
+    num_of_class_1 = np.sum(examples_y[knn])
+    if num_of_class_1 > len(knn) / 2: # over half of the nearest neighbors were a part of class 1
+        return 1
+    else: # class 0 made up half or over nearest neighbors
+        # guess 0 for 'num of class 1' == 'num of class 0' since over half the data is comprised of class 0
+        return 0
 
 
 
@@ -180,8 +227,38 @@ def knn_classify_point(examples_X, examples_y, query, k):
 ######################################################################
 
 def cross_validation(train_X, train_y, num_folds=4, k=1):
-    #TODO
-    return avg_val_acc, varr_val_acc
+    # used for debugging: if either val is negative, it indicates a bug
+    avg_val_acc = -1
+    var_val_acc = -1
+    accuracies = np.full(num_folds, -1) # array to store accuracies for variance calculation
+
+    # split train x and train y into num_folds different subsets
+    # subset_size = int(len(train_y) / num_folds)
+    subsets_x = np.split(train_X, num_folds)
+    subsets_y = np.split(train_y, num_folds)
+    # use each subset once to test while the others to train the model
+    for i in range(0, num_folds): # index i holds the current test set
+        # training_data = np.zeros(0)
+        # label_data = np.zeros(0)
+        # for j in range(0, num_folds): # create training data matrix
+        #     if i != j:
+        #         training_data = np.append(training_data, subsets_x[j])
+        #         label_data = np.append(label_data, subsets_y[j])
+        training_data = np.concatenate([subsets_x[j] for j in range(num_folds) if i != j])  # form training data
+        label_data = np.concatenate([subsets_y[j] for j in range(num_folds) if i != j])  # form label data
+        # Reshape the concatenated arrays
+        # chatGPT helped me with these next two lines (alternative to vswitch() I think)
+        training_data = training_data.reshape(-1, train_X.shape[1])
+        label_data = label_data.reshape(-1, 1)
+        # by now, all the training data matrix is created
+        model_predictions = predict(training_data, label_data, subsets_x[i], k)
+        avg_val_acc += compute_accuracy(subsets_y[i], model_predictions)
+    avg_val_acc /= num_folds
+        # avg_val_acc = np.mean(accuracies)
+    var_val_acc = np.var(accuracies)
+        
+    # avg out the accuracy of each "fold"
+    return avg_val_acc, var_val_acc
 
 
 
@@ -232,7 +309,9 @@ def predict(examples_X, examples_y, queries_X, k):
     # For each query, run a knn classifier
     predicted_y = [knn_classify_point(examples_X, examples_y, query, k) for query in queries_X]
 
-    return np.array(predicted_y,dtype=np.int)[:,np.newaxis]
+    # 'np.int' was deprecated, replaced with a version using 'int' instead
+    # return np.array(predicted_y,dtype=np.int)[:,np.newaxis]
+    return np.array(predicted_y,dtype=int)[:,np.newaxis]
 
 # Load data
 def load_data():
