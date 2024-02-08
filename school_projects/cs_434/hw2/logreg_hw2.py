@@ -1,5 +1,9 @@
 import numpy as np
 np.random.seed(42)
+
+# import matplotlib
+# matplotlib.use('TkAgg')  # Use an appropriate backend, like TkAgg
+
 import matplotlib.pyplot as plt
 import logging
 logging.basicConfig(
@@ -8,8 +12,8 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 # GLOBAL PARAMETERS FOR STOCHASTIC GRADIENT DESCENT
-step_size=0.0001
-max_iters=1000
+step_size=0.15
+max_iters=5000
 
 def main():
 
@@ -52,7 +56,7 @@ def main():
   logging.info("\n---------------------------------------------------------------------------\n")
 
   logging.info("Running cross-fold validation for bias case:")
-
+  # raise Exception('IGNORE ME')
   # Perform k-fold cross
   for k in [2,3,4, 5, 10, 20, 50]:
     cv_acc, cv_std = kFoldCrossVal(X_train_bias, y_train, k)
@@ -62,8 +66,16 @@ def main():
   # Write the code to make your test submission here
   ####################################################
 
-  raise Exception('Student error: You haven\'t implemented the code in main() to make test predictions.')
+  # take input vectors, multiply them by weight vector, get ouput
+  X_test_bias = dummyAugment(X_test)
+  y_pred_test = (X_test_bias@w >= 0).astype(int) # (array of bools) --> (array of 0, 1)
+  # print(y_pred_test)
 
+  # create output file here
+  with open("output.csv", "w") as file:
+    file.write("id,type")
+    for index, value in enumerate(y_pred_test):
+      file.write(f"\n{index},{value[0]}")
 
 
 ######################################################################
@@ -80,12 +92,7 @@ def main():
 #               applying the logistic function to z[i]
 ######################################################################
 def logistic(z):
-  logit_z = np.exp(z) # logitz_z[i] = e^(z[i])
-  for i in range(len(z)):
-    logit_z[i] = 1 / (1 - logit_z[i])
-
-  logit_z = np.array(logit_z) # convert array to vector
-  return logit_z
+  return np.reciprocal(1 + np.exp(-np.clip(z, -700, 700))) # prevent overflows while calculating logistic function
 
 
 ######################################################################
@@ -107,16 +114,11 @@ def logistic(z):
 #   nll --  the value of the negative log-likelihood
 ######################################################################
 def calculateNegativeLogLikelihood(X,y,w):
-  nll = 0
-  # calculate logistic(W^T * x_i) - vector
-  # calculate LOG(  logistic(W^T * x_i)  ) and LOG(  1 - logistic(W^T * x_i)  ) - vector, vector
+  very_small_const = 0.0000001
 
-  # calculate negative log likelihood
-  for i in range(len(y)):
-    # nll -= (  y_i * LOG(logistic(W^T * x_i)) + (1 - y_i) * LOG(1 - logistic(W^T * x_i))  )
-    nll -= (  y[i]  )
+  logist = np.clip(logistic(X@w), very_small_const, 1 - very_small_const) # prevent divide by 0 error
 
-  return nll
+  return -np.sum(y * np.log(logist) + (1 - y) * np.log(1 - logist))
 
 
 
@@ -161,10 +163,13 @@ def trainLogistic(X,y, max_iters=max_iters, step_size=step_size):
         # .
         # . Implement equation 9.
         # .
-     
-        raise Exception('Student error: You haven\'t implemented the gradient calculation for trainLogistic yet.')
+        w_grad = np.zeros(len(X))
+        w_grad = X.T@(logistic(X@w) - y)
 
+
+        # w_grad.reshape(-1, 1)[0]
         # This is here to make sure your gradient is the right shape
+        # print(w_grad.shape, X.shape)
         assert(w_grad.shape == (X.shape[1],1))
 
         # Take the update step in gradient descent
@@ -194,7 +199,9 @@ def trainLogistic(X,y, max_iters=max_iters, step_size=step_size):
 #
 ######################################################################
 def dummyAugment(X):
-  raise Exception('Student error: You haven\'t implemented dummyAugment yet.')
+  new_column = (np.full(len(X), 1)).reshape(-1, 1) # create a column of 1's: [[1], ..., [1]]
+  aug_X = np.concatenate((new_column, X), 1) # augment X with a row of columns
+  return aug_X
 
 
 
