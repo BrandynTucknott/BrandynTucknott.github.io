@@ -174,10 +174,4 @@ main =
 		print ( removeVertex 1 [(1,1)])	
 
 		putStrLn " c) test 4 - removeVertex 5 g"		
-		print ( removeVertex 5 g)				
-		
-		
-		
-		
-		
-		
+		print ( removeVertex 5 g)
