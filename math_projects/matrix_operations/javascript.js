@@ -163,7 +163,7 @@ calculate_button_element.addEventListener('click', () =>
         return;
     isCalculating = true; // remove button functionality to prevent spam
 
-
+    WebAssembly.Module();
     
     isCalculating = false; // calculation is complete, restore button functionality
 });
