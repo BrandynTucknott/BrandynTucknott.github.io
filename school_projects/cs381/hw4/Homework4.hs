@@ -93,4 +93,4 @@ sem (c:cs) s = case semCmd c s of
 -- remove the Just from the stack to return S stack
 run :: Prog -> Stack -> Result
 run p s = if isNothing((sem p s))then Error
-		  else S (fromJust(sem p s))
+	        else S (fromJust(sem p s))

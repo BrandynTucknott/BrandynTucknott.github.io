@@ -1,0 +1,29 @@
+[2 of 2] Compiling HW5sol           ( HW5sol.hs, HW5sol.o )
+
+HW5sol.hs:59:1: warning: [-Woverlapping-patterns]
+    Pattern match has inaccessible right hand side
+    In an equation for ‘semCmd’: semCmd (POP 1) (_ : s) = ...
+   |
+59 | semCmd (POP 1) (_:s) = Just s
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+HW5sol.hs:60:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ‘semCmd’: semCmd (POP k) (_ : []) = ...
+   |
+60 | semCmd (POP k) (_:[])
+   | ^^^^^^^^^^^^^^^^^^^^^^...
+
+HW5sol.hs:68:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ‘semCmd’: semCmd _ _ = ...
+   |
+68 | semCmd _ _ = Nothing -- anything that reaches here is garbage; catch it and delete it
+   | ^^^^^^^^^^^^^^^^^^^^
+
+HW5sol.hs:132:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ‘rankP’: rankP [] s = ...
+    |
+132 | rankP [] s = Just s
+    | ^^^^^^^^^^^^^^^^^^^
