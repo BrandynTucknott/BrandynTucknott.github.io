@@ -9,4 +9,4 @@ verify: HW5sol.hs hw5verifier.hs
 	./ver
 
 clean:
-	rm *.o *.hi hw verify
+	rm *.o *.hi hw ver

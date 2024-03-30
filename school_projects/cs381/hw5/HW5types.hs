@@ -6,7 +6,7 @@ type Prog = [Cmd]
 data Cmd = LDI Int | ADD | MULT | DUP | DEC 
 		| SWAP | POP Int | IFELSE Prog Prog
 		| LDB Bool | LEQ
-         deriving (Show, Eq)
+         deriving Show
 		 
 data Val = I Int | B Bool 
 		deriving Show
