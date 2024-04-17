@@ -195,7 +195,7 @@ void resolveOption1(struct movie* list)
 * returns index of movie from year if array contains such a movie
 * returns -1 otherwise
 */
-int containsMovieFromYear(struct movie** movies, int SIZE, int targetYear)
+int containsMovieFromYear(struct movie** movies, const int SIZE, const int targetYear)
 {
     for (int i = 0; i < SIZE; i++)
     {
@@ -313,21 +313,21 @@ void resolveOption3(struct movie* list)
 
 int main(int argc, char *argv[])
 {
-    if (argc < 2) // check cmd line arguments for file name
-    {
-        printf("You must provide the name of the file to process\n");
-        printf("Example usage: ./movies movies_sample_1.txt\n");
-        return EXIT_FAILURE;
-    }
+    // if (argc < 2) // check cmd line arguments for file name
+    // {
+    //     printf("You must provide the name of the file to process\n");
+    //     printf("Example usage: ./movies movies_sample_1.txt\n");
+    //     return EXIT_FAILURE;
+    // }
 
     // process movies from file
-    int numMovies = 0;
-    struct movie* list = processFile(argv[1], &numMovies);
-    printf("Processed file %s and parsed data for %d movies.\n\n", argv[1], numMovies);
+    // int numMovies = 0;
+    // struct movie* list = processFile(argv[1], &numMovies);
+    // printf("Processed file %s and parsed data for %d movies.\n\n", argv[1], numMovies);
 
     // main execution loop
-    bool doMainExec = true;
-    do 
+    // bool doMainExec = false;
+    /*do 
     {
         // get user menu choice - what did they choose to do?
         // 1 - show movies in a specified year
@@ -338,7 +338,7 @@ int main(int argc, char *argv[])
         int menuChoice = getUserIntInput("\nEnter a choice from 1 to 4: ");
 
         // process choices
-        switch (menuChoice)
+        /*switch (menuChoice)
         {
             case 1:
                 resolveOption1(list);
@@ -357,7 +357,16 @@ int main(int argc, char *argv[])
                 break;
         }
 
-    } while (doMainExec);
+    } while (doMainExec);*/
 
-    return EXIT_SUCCESS;
+    // free used memory
+    // while (list != NULL)
+    // {
+    //     struct movie* tempMovie = list;
+    //     list = list->next;
+    //     // free(tempMovie->title);
+    //     // free(tempMovie->languages);
+    //     free(tempMovie);
+    // }
+    return 0;
 }
