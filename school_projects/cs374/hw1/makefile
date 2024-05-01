@@ -7,4 +7,4 @@ memcheck: main.c movies_sample_1.csv
 	valgrind ./movies_mem movies_sample_1.csv
 
 clean: main.c movies
-	rm *.o movies test
+	rm *.o movies movies_mem
