@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSA Demo</title>
+  <link rel="icon" href="key.webp">
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="functions.js"></script>
+  <script defer src="eventListeners.js"></script>
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>RSA Key Generator</h1>
+
+    <section id="input-section">
+      <label for="prime1">Prime p:</label>
+      <input type="number" id="prime1" />
+
+      <label for="prime2">Prime q:</label>
+      <input type="number" id="prime2" />
+
+      <button id="gen-choice-btn">Generate Public Key Choices</button>
+
+      <div>
+        <p>Some possible choices include: </p>
+        <p id="possible-public-keys"></p>
+      </div>
+
+      <label for="public-key">Public Key</label>
+      <input type="number" id="public-key">
+    </section>
+
+    <section id="output-section">
+      <h2>Public Key</h2>
+      <p id="public-key"></p>
+
+      <h2>Private Key</h2>
+      <p id="private-key"></p>
+    </section>
+  </div>
+</body>
+</html>
