@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="style.css" />
   <script defer src="functions.js"></script>
   <script defer src="eventListeners.js"></script>
+  <script defer src="update.js"></script>
+  <script defer src="math.js"></script>
   <script defer src="main.js"></script>
 </head>
 <body>
@@ -17,11 +19,14 @@
     <section id="input-section">
       <label for="prime1">Prime p:</label>
       <input type="number" id="prime1" />
+      <div><p id="prime1-err-box" class="error-box"></p></div>
 
       <label for="prime2">Prime q:</label>
       <input type="number" id="prime2" />
+      <div><p id="prime2-err-box" class="error-box"></p></div>
 
-      <button id="gen-choice-btn">Generate Public Key Choices</button>
+      <button id="gen-choice-btn">Display Some Public Key Choices</button>
+      <div><p id="gen-public-key-err-box" class="error-box"></p></div>
 
       <div>
         <p>Some possible choices include: </p>
@@ -30,14 +35,14 @@
 
       <label for="public-key">Public Key</label>
       <input type="number" id="public-key">
-    </section>
+      <div><p id="public-key-err-box" class="error-box"></p></div>
 
-    <section id="output-section">
-      <h2>Public Key</h2>
-      <p id="public-key"></p>
+      <div>
+          <label for="private-key">Private Key</label>
+          <p id="private-key">None</p>
+      </div>
 
-      <h2>Private Key</h2>
-      <p id="private-key"></p>
+
     </section>
   </div>
 </body>

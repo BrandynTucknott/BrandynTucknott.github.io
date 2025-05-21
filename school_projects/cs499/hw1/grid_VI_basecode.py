@@ -26,14 +26,14 @@ class Taxi_Grid():
         self.s0 = 0
         self.goal_id = 11
         ## Modify the following 4 lines for testing with other reward functions.
-        # self.R =  np.full((len(self.states)), -1)
-        # self.R[self.goal_id] = 100.0
-        # for s in self.traffic_state_id:
-        #     self.R[s] = -10.0  
-        self.R =  np.full((len(self.states)), -5)
-        self.R[self.goal_id] = 500.0
+        self.R =  np.full((len(self.states)), -1)
+        self.R[self.goal_id] = 100.0
         for s in self.traffic_state_id:
-            self.R[s] = -50.0
+            self.R[s] = -10.0  
+        # self.R =  np.full((len(self.states)), -5)
+        # self.R[self.goal_id] = 500.0
+        # for s in self.traffic_state_id:
+        #     self.R[s] = -50.0
 
         self.P = [ [None]*len(self.actions) for i in range(len(self.states)) ]
         for s in self.states:

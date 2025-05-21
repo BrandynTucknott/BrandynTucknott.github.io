@@ -21,4 +21,8 @@ body {
     width: 100%;
     font-size: 1em;
   }
+
+  .error-box {
+    color: red;
+  }
   

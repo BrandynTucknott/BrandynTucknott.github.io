@@ -26,7 +26,7 @@ class Taxi_Grid():
         self.R =  np.full((len(self.states)), -1)
         self.R[self.goal_id] = 100.0
         for s in self.traffic_state_id:
-            self.R[s] = -10.0  
+            self.R[s] = -10.0
 
 
         self.P = [ [None]*len(self.actions) for i in range(len(self.states)) ]
@@ -128,14 +128,6 @@ class Taxi_Grid():
                     qaction = 0
                     succ_list = self.P[s][bestAction[s]]
                     if succ_list is not None: #Note: calculate v1[s] using the values from previous iteration (self.V[s])
-                        # V(s) + R(s) + gamma * sum(T(s, a, s_p) * V(s_p))
-                        # v1[s] = self.R[s] + sum([prob * self.gamma * self.V[s_p]for s_p, prob in succ_list])
-                        # v1[s] = sum([prob * (self.R[s_p] + self.gamma * self.V[s_p][0]) for s_p, prob in succ_list])
-                        # v1[s] = sum([prob * (self.R[s_p] + self.gamma * self.V[s_p]) for s_p, prob in succ_list])
-                        # for s_p, prob in succ_list:
-                        #     # qaction += prob * (self.R[s_p] + self.gamma * self.V[s_p])
-                        #     qaction += prob * self.V[s_p]
-                        # v1[s] = self.R[s] + self.gamma * qaction
                         v1[s] = self.R[s] + self.gamma * sum([prob * self.V[s_p] for s_p, prob in succ_list])
 
                     max_residual = max(max_residual, abs(v1[s] - self.V[s]))
@@ -158,13 +150,9 @@ class Taxi_Grid():
                 # Hint: You need to calculate Q values of all actions and select the best action for policy improvement.
                 for na, a in enumerate(self.actions):
                     # __HERE - this whole loop
-                    # compute Q(s, a) = R(s) + gamma * sum(T(s, a, s')V(s'))
-                    # replace pi with pi*
                     succ_list = self.P[s][na]
                     if succ_list is None:
                         continue
-                    # q = sum([p * (self.R[s_] + self.gamma * self.V[s_]) for s_, p in succ_list])
-                    # q = sum([p * (self.R[s_] + self.gamma * self.V[s_]) for s_, p in succ_list])
                     q = self.R[s] + self.gamma * sum([p * self.V[s_] for s_, p in succ_list])
 
                     if q > bestQ:
@@ -194,7 +182,6 @@ class Taxi_Grid():
                 prob = succ[1] #denotes the transition probability
                 
     #############################Complete the following line of code to calculate Q-value.
-                # qaction += prob * (self.R[s] + self.gamma * self.V[succ_state_id])
                 qaction += prob * self.gamma * self.V[succ_state_id]
     
             qaction += self.R[s]
@@ -214,9 +201,114 @@ class Taxi_Grid():
         for i, v in enumerate(self.V):
             print(f"State {i} has Value {v[0]: 0.2f}")
         
-
-taxi = Taxi_Grid()
-taxi.PI()
-print("expected reward = ", float(taxi.V[0]))
-taxi.printPolicy()
-taxi.printValues()
+        
+    # Input: None
+    # Output: episode as a list of tuples (state, action, reward)
+    # Generates a episode using an epsilon greedy policy
+    def generateEpisode(self, epsilon):
+        # track episode; each episode consists of tuples (S, A, R)
+        episode = []
+        START_STATE = 0
+        END_STATE = 11
+        curr_state = START_STATE # start state = 0
+        # print(f"curr_state: {curr_state}")
+        
+        # construct the episode
+        while True:
+            # best or random action?
+            # what action is being taken, explore vs exploit
+            explore = np.random.rand() <= epsilon
+            # viable_actions = [idx for idx, _ in enumerate(self.actions) if self.P[curr_state][idx] is not None]
+            viable_actions = [idx for idx, _ in enumerate(self.actions)]
+            action = None
+            if explore:
+                action = np.random.choice(viable_actions)
+            else:
+                action = self.policy[curr_state]
+                
+            # by here, an action has been chosen
+            # calculate reward and add to episode
+            episode.append((curr_state, action, self.R[curr_state]))
+            
+            # did we just append the Goal state to the episode?
+            if (curr_state == END_STATE):
+                break
+            
+            # was the action successful or not?
+            succ = self.getSucc(curr_state, self.actions[action])
+            success = None
+            new_state = None
+            if succ is None: # attempted action does not work in that location
+                new_state = curr_state # nothing happens
+            else:
+                success = np.random.rand() <= succ[0][1] # largest prob for success
+                new_state = succ[0][0] if success else succ[1][0]
+            
+            # print(succ)
+            if succ is not None:
+                # print(f"Took action {action} to move from State {curr_state} --> {new_state}")
+                curr_state = new_state
+            # elif succ is None:
+            #     print(f"Illegal Move: Tried action {action} at {curr_state} --> {new_state}")
+            
+        # end of while loop, an episode has been constructed
+        return episode
+        
+    def graphEpisodes(self, epsilon):
+        import matplotlib.pyplot as plt
+        
+        # generate a list of all episodes
+        episodes = []
+        MAX_NUM_EPISODES = 20
+        for idx in range(0, MAX_NUM_EPISODES):
+            episodes.append(self.generateEpisode(epsilon))
+            print(f"Episode {idx + 1}:")
+            self.printEpisode(episodes[idx])
+        
+        # count frequency of each state across episodes
+        NUM_STATES = len(self.states)
+        frequency = np.zeros(NUM_STATES)
+        for ep in episodes:
+            for S, _, _ in ep: # episodes are lists of tuples (S, A, R)
+                frequency[S] += 1
+                
+                
+        # graph the results
+        states = np.arange(NUM_STATES)
+        plt.figure(figsize=(10, 5))
+        plt.bar(states, frequency, color='skyblue', edgecolor='black')
+        plt.xlabel("State")
+        plt.ylabel("Visit Frequency")
+        plt.title(rf"State Visitation Frequency with epsilon $\varepsilon = {epsilon}$")
+        plt.xticks(states)
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.tight_layout()
+        plt.show(block=False)
+    
+    def printEpisode(self, ep):
+        if ep is None:
+            print("Episode is empty: []")
+            return
+        
+        for s, a, r in ep:
+            print(f"({s}, {a}, {r}) --> ")
+            
+        print("LIST END") # keep it consistent, show end of list
+            
+def main():
+    # initial Taxi_Grid PI check
+    taxi = Taxi_Grid()
+    taxi.PI()
+    print("expected reward = ", float(taxi.V[0]))
+    taxi.printPolicy()
+    taxi.printValues()
+    
+    # episode checks with varying epsilon
+    taxi.graphEpisodes(epsilon=0.2)
+    taxi.graphEpisodes(epsilon=0.5)
+    taxi.graphEpisodes(epsilon=0.9)
+    
+    input("Press Enter to close:")
+    
+if __name__ == "__main__":
+    main()
